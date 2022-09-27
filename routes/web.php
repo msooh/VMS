@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\VisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,7 @@ Route::post('custom-login', [CustomAuthController::class, 'custom_login'])->name
 Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard');
 
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
+
+Route::get('visitors', [VisitorController::class, 'index'])->name('visitors');
+
+Route::get('visitors/fetchall', [VisitorController::class, 'fetch_all'])->name('visitors.fetchall');
