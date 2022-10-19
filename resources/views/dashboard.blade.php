@@ -1,70 +1,159 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor Management System</title>
-    <script src="{{ asset('/javascript/jquery-3.6.1.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/Fontawesome/css/fontawesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('/Fontawesome/css/brands.css') }}">
-    <link rel="stylesheet" href="{{ asset('/Fontawesome/css/solid.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}" class="stylesheet">
-    @stack('css')
-</head>
-<body>
-    @guest
-    @yield('content')
-    @else
-        <nav class="navbar navbar-expand-sm navbar-transparent">
-            <div class="container-fluid">
-                <img src="{{ asset('images/logo.png') }}" style="float:left; height: 60px; color: white;">
-              <a class="navbar-brand" href="#">Visitor Management</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="nav navbar-nav ms-auto">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">How'd {{Auth::user()->name}}</a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-item">
-                        <div class="navbar-content">
-                            <span>{{Auth::user()->name}}</span>
-                            <p class="text-muted small">
-                            {{Auth::user()->email}}
-                            </p>
-                            <div class="divider">
-                            </div>
-                            <li><a href="{{ route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Logout</span></a></li>
-                        </div>
-                    </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        <div class="container-fluid dashboard">   
-        <div class="row dashboard-row">
-            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
-                <div class="navi">
-                    <ul>
-                        <li class="active"><a href="/visitors"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Visitors</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Appointments</span></a></li>
-                        <li><a href="#"><i class="fa fa-file" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Reports</span></a></li>
-                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
-                    </ul>
-                </div>
-            </div>
-             <div class="col-md-10 col-sm-11 display-table-cell v-align">
-             @yield('content')
-             </div>
-        </div>
+@extends('layouts.app')
 
-    </div>
-    @endguest
-    <script src="{{ asset ('/js/bootstrap.min.js') }}"></script>
-</body>
-</html>
+@section('title', 'Dashboard')
+
+@section('content')
+	<!--start page wrapper -->
+	<div class="page-wrapper">
+		<div class="page-content">
+
+			<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+				<div class="col">
+					<div class="card radius-10 ">
+						<div class="card-body">
+						<div class="d-flex align-items-center">
+							<h5 class="mb-0 text-primary">23</h5>
+							<div class="ms-auto">
+								<i class="bx bx-group fs-3 text-primary"></i>
+							</div>
+						</div>
+						<div class="progress my-2" style="height:4px;">
+							<div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<div class="d-flex align-items-center">
+							<p class="mb-0">Appointments</p>
+						</div>
+					</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card radius-10">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<h5 class="mb-0 text-success">155</h5>
+							<div class="ms-auto">
+								<i class="bx bx-group fs-3 text-success"></i>
+							</div>
+						</div>
+						<div class="progress my-2" style="height:4px;">
+							<div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<div class="d-flex align-items-center">
+							<p class="mb-0">Total Checkin</p>
+						</div>
+					</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card radius-10">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<h5 class="mb-0 text-danger">127</h5>
+							<div class="ms-auto">
+								<i class="bx bx-group fs-3 text-danger"></i>
+							</div>
+						</div>
+						<div class="progress my-2" style="height:4px;">
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<div class="d-flex align-items-center">
+							<p class="mb-0">Total Checkout</p>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="col">
+					<div class="card radius-10">
+						<div class="card-body">
+						<div class="d-flex align-items-center">
+							<h5 class="mb-0 text-warning">50</h5>
+							<div class="ms-auto">
+								<i class="bx bx-group fs-3 text-warning"></i>
+							</div>
+						</div>
+						<div class="progress my-2" style="height:4px;">
+							<div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<div class="d-flex align-items-center">
+							<p class="mb-0">Repeat Visitors</p>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div><!--end row-->
+		
+		<div class="row">
+			<div class="col-12 col-lg-8 col-xl-8 d-flex">
+				<div class="card radius-10 w-100">
+				<div class="card-body">
+					<div class="d-flex align-items-center">
+						<div>
+							<h6 class="mb-0">Visitors </h6>
+						</div>
+						<div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+						</div>
+					</div>
+					
+					<div class="chart-container-1">
+						<canvas id="chart1"></canvas>
+					</div>
+				</div>
+				
+				</div>
+			</div>
+		
+			<div class="col-12 col-lg-4 col-xl-4 d-flex">
+				<div class="card radius-10 overflow-hidden w-100">
+					<div class="card-body">
+					<div class="d-flex align-items-center">
+						<div>
+							<h6 class="mb-0">Total Visitor Status</h6>
+						</div>
+						<div class="font-22 ms-auto text-white"><i class="bx bx-dots-horizontal-rounded"></i>
+						</div>
+					</div>
+					<div class="chart-container-2 my-3">
+						<canvas id="chart2"></canvas>
+						</div>
+					</div>
+					<div class="table-responsive">
+					<table class="table align-items-center mb-0">
+						<tbody>
+						<tr>
+							<td><i class="bx bxs-circle me-2" style="color: #14abef"></i>Main Gate</td>
+							<td>856</td>
+						</tr>
+						<tr>
+							<td><i class="bx bxs-circle me-2" style="color: #02ba5a"></i>Side Gate</td>
+							<td>602</td>
+						</tr>
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!--End Row-->
+
+		</div>
+			
+	</div>
+	</div>
+	<!--end page wrapper -->
+@endsection
+
+@pushOnce('scripts')
+	<script src="assets/plugins/chartjs/js/Chart.min.js"></script>
+	<script src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+	<script src="assets/plugins/jquery-knob/excanvas.js"></script>
+	<script src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+	<script>
+		$(function() {
+			$(".knob").knob();
+		});
+	</script>
+	<script src="assets/js/index.js"></script>
+@endpushOnce
