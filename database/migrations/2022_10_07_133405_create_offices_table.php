@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('office_name');
             $table->integer('office_number');
-            $table->foreignId(' court_id')->constrained('courts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('court_id')->constrained('courts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('department_id')->constrained('departments')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

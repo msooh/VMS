@@ -38,7 +38,7 @@
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bx-category"></i>
                     </div>
-                    <div class="menu-title">User</div>
+                    <div class="menu-title">Staff</div>
                 </a>
                 <ul>
                     <li> <a href="{{ route('employees.create') }}"><i class="bx bx-right-arrow-alt"></i>Add Employee</a>
@@ -57,8 +57,6 @@
                     <li> <a href="{{ route('offices.create') }}"><i class="bx bx-right-arrow-alt"></i>Add Office</a>
                     </li>
                     <li> <a href="{{ route('offices.index') }}"><i class="bx bx-right-arrow-alt"></i>View Offices</a>
-                    </li>
-                    <li> <a href="{{ route('offices.allocate') }}"><i class="bx bx-right-arrow-alt"></i>Allocate Office</a>
                     </li>
                 </ul>
             </li>
@@ -82,9 +80,9 @@
                     <div class="menu-title">Visitors</div>
                 </a>
                 <ul>
-                    <li> <a href="add-visitor.html"><i class="bx bx-right-arrow-alt"></i>Add Visitor</a>
+                    <li> <a href="{{ route('visitors.index') }}"><i class="bx bx-right-arrow-alt"></i>Visitors</a>
                     </li>
-                    <li> <a href="list-visitor.html"><i class="bx bx-right-arrow-alt"></i>View Visitors</a>
+                    <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Appointments</a>
                     </li>
                 </ul>
             </li>

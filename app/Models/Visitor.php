@@ -18,6 +18,11 @@ class Visitor extends Model
         'visit_date',
         'time_in',
         'time_out',
+        'employee_id',
+        'avatar',
+        'badge_id',
         'visitor_status'
     ];
 }
+
+        

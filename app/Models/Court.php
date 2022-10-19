@@ -27,4 +27,9 @@ class Court extends Model
         return $this->hasMany(Badge::class);
     }
 
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
 }

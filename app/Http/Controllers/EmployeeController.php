@@ -6,6 +6,8 @@ use App\Models\Role;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Models\Office;
+use App\Models\Court;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -16,8 +18,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::with(['department', 'role'])->get();
-        return view('employees.index', compact('employees'));
+        $employees = Employee::with(['department', 'office', 'role'])->get();
+        $departments = Department::all();
+        return view('employees.index', compact('employees', 'departments'));
     }
 
     /**

@@ -27,6 +27,12 @@ class Employee extends Model
     public function office() {
         return $this->belongsTo(Office::class);
     }
+     /**
+     * Get the court for the employee.
+     */
+    public function court() {
+        return $this->belongsTo(Court::class);
+    }
 
     /**
      * Get the role for the employee.

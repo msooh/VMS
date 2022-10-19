@@ -1752,7 +1752,7 @@ a {
 	margin-top: 0;
 
 
-	color: #0d6efd
+	color: #667618
 
 
 }
@@ -1788,7 +1788,7 @@ a {
 	padding-left: 6px;
 
 
-	border-left: 6px solid #0d6efd;
+	border-left: 6px solid #667618;
 
 
 	background: #e7f2ff;
@@ -1869,7 +1869,7 @@ a {
 	font-weight: 400;
 
 
-	color: #0d6efd;
+	color: #667618;
 
 
 	font-size: 1.2em
@@ -1905,7 +1905,7 @@ a {
 	font-size: 1.6em;
 
 
-	background: #0d6efd
+	background: #667618
 
 
 }
@@ -1923,7 +1923,7 @@ a {
 .invoice table .total {
 
 
-	background: #0d6efd;
+	background: #667618;
 
 
 	color: #fff
@@ -1980,13 +1980,13 @@ a {
 .invoice table tfoot tr:last-child td {
 
 
-	color: #0d6efd;
+	color: #667618;
 
 
 	font-size: 1.4em;
 
 
-	border-top: 1px solid #0d6efd
+	border-top: 1px solid #667618
 
 
 }
@@ -3999,7 +3999,43 @@ a {
 
 }
 
+.new-visitor {
+    background: #667618 none repeat scroll 0 0;
+    border-radius: 100px;
+    color: #ffff;
+    font-size: 14px;
+    font-weight: 600;
+	float: right !important;
+    padding: 10px 45px 10px 45px;
+	position: inline-block;
+	margin-right: 0;
+    
+}
+.header-rightside::before {
+	float: inline-end !important;
 
+}
+.header-rightside {
+	float: right !important;
+}
+.header-rightside .nav > li > a:focus,
+.header-rightside .nav > li > a:hover {
+    background: none;
+    text-decoration: none;
+}
+
+.new-visitor::before {
+    background: rgba(0, 0, 0, 0) no-repeat scroll 0 0;
+    content: "";
+    height: 12px;
+    left: 17px;
+    top: 12px;
+    width: 12px;
+}
+
+.new-visitor:hover {
+    color: #ffffff;
+}
 /*Forms */
 
 
@@ -4012,6 +4048,37 @@ input::placeholder {
 	opacity: .3 !important
 
 
+}
+.booking-form .form-control::-webkit-input-placeholder
+{
+    color: #fff !important;
+}
+.booking-form .form-control:-ms-input-placeholder
+{
+    color: #fff !important;
+}
+.booking-form .form-control::placeholder
+{
+    color: #fff !important;
+}
+#phone{
+	color: #ffffff !important;
+}
+/*International Telephone*/
+.intl-tel-input {
+  display: table-cell;
+}
+.intl-tel-input .selected-flag {
+  z-index: 4;
+}
+.intl-tel-input .country-list {
+  z-index: 5;
+}
+.form-group .intl-tel-input .form-control {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 0;
 }
 
 
@@ -4828,7 +4895,7 @@ input::placeholder {
 	font-size: 24px;
 
 
-	background: #0d6efd;
+	background: #667618;
 
 
 	box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, .13);

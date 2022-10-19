@@ -23,7 +23,7 @@
 			</div>
 			<!--end breadcrumb-->
 			<hr/>
-			<div class="card border-top border-0 border-4 border-primary">
+			<div class="card border-top border-0 border-4 border-success">
 				<div class="card-body">
 					<div class="p-4 border rounded">
 						<form class="row g-3 needs-validation" action="" method="post" novalidate>

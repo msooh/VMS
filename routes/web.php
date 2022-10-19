@@ -59,37 +59,27 @@ Route::middleware('auth')->group(function () {
         Route::post('courts', [SettingController::class, 'storeCourt']);
     });
 
-    /*Route::prefix('sites')->name('sites.')->group(function () {
-        Route::get('index', [SiteController::class, 'index'])->name('index');
-        Route::get('create', [SiteController::class, 'create'])->name('create');    
-        Route::post('store', [SiteController::class, 'store'])->name('store');
-        Route::get('allocate', [EmployeeSiteController::class, 'create'])->name('allocate');
-        Route::post('allocate', [EmployeeSiteController::class, 'store']);
-    });*/
-
 
     Route::prefix('offices')->name('offices.')->group(function () {
         Route::get('index', [OfficeController::class, 'index'])->name('index');
         Route::get('create', [OfficeController::class, 'create'])->name('create');    
         Route::post('store', [OfficeController::class, 'store'])->name('store');
         Route::get('offices/index/{id}', [OfficeController::class, 'show'])->name('show');
-        Route::get('allocate', [EmployeeSiteController::class, 'create'])->name('allocate');
-        Route::post('allocate', [EmployeeSiteController::class, 'store']);
     
     });
-    /*Route::prefix('visitors')->name('visitors.')->group(function () {
+    Route::prefix('visitors')->name('visitors.')->group(function () {
         Route::get('index', [VisitorController::class, 'index'])->name('index');
         Route::get('create', [VisitorController::class, 'create'])->name('create');    
         Route::post('store', [VisitorController::class, 'store'])->name('store');
         Route::get('allocate', [EmployeeVisitorController::class, 'create'])->name('allocate');
         Route::post('allocate', [EmployeeVisitorController::class, 'store']);
-    });*/
+    });
 
-    Route::get('visitors', [VisitorController::class, 'index'])->name('visitors');
+    /*Route::get('visitors', [VisitorController::class, 'index'])->name('visitors');
 
     Route::post('visitors/add_validation', [VisitorController::class, 'add_validation'])->name('visitor.add_validation');
 
-    Route::get('visitors/fetchall', [VisitorController::class, 'fetch_all'])->name('visitors.fetchall');
+    Route::get('visitors/fetchall', [VisitorController::class, 'fetch_all'])->name('visitors.fetchall');*/
 
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
     

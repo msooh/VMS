@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Visitor;
 
-use App\Models\User;
+use App\Models\Employee;
+use App\Models\Office;
+use App\Models\Court;
 
 use App\Models\Badge;
 
@@ -20,62 +22,59 @@ use Illuminate\Support\Facades\DB;
 
 class VisitorController extends Controller
 {
-    /*public function _construct()
+    public function _construct()
     {
         $this->middleware('auth');
-    }*/
-
-    function index()
+    }
+     /**
+     * Display the visitor index page.
+     *
+     */
+    public function index()
     {
-        $data = Visitor::all();
-        $userList = User::select('id', 'name')->get();
-        $badgeList = Badge::select('id', 'badge_number')->get();
-        $visitors = DB::table ('visitors')
-                    ->select('visitors.*', 'users.name as userName', 'badges.badge_number as badgeNumber')
-                    ->leftJoin('users', 'users.id', 'visitors.user_id')
-                    ->leftJoin('badges', 'badges.id', 'visitors.badge_id')
-                    ->get();
-
-          
-        return view('visitors', ['visitors' => $data], ['visitors' => $visitors],  compact ('userList', 'badgeList') );
+        $visitors = Visitor::with(['employee', 'badge'])->get();
+        $employees = Employee::all();
+        $offices = Office::all();
+        $badges = Badge::all();
+    
+        return view('visitors.index', compact('visitors', 'employees', 'offices', 'badges'));
     }
 
-    function add_validation(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+
+    /**
+     * Handle an incoming authentication request.
+     *
+     * @param  \App\Http\Requests\Auth\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $request->validate([
-            'visitor_name'       =>  'required',
-            'visitor_email'      =>  'required',
-            'visitor_id_number'  =>  'required',
-            'visitor_country_code'=> 'required',
-            'visitor_phone_number'=> 'required',
-            'visit_date'          => 'required',
-            'time_in'             => 'required',
-            'time_out'            => 'required',
-          
-        ]);
+        $data = $request->all();
+        $data['created_by'] = auth()->user()->id;
+        $data['updated_by'] = auth()->user()->id;
+        
+        if($request->file('avatar')):
+            $fileName = time().$request->file('avatar')->getClientOriginalName();
+            $path = $request->file('avatar')->storeAs('avatars', $fileName, 'public');
+            $data['avatar'] = '/storage/'.$path;
+        endif;
 
-        //$data = $request->all();
-        //$time_in = Carbon::now();
+        Visitor::create($data);
 
-        Visitor::create([
+        return redirect()->back();
+    }
+ 
 
-            'visitor_name'          =>  request('visitor_name'),
-            'visitor_email'         =>  request('visitor_email'),
-            'visitor_id_number'     =>  request('visitor_id_number'),
-            'visitor_country_code'  =>  request('visitor_country_code'),
-            'visitor_phone_number'  =>  request('visitor_phone_number'),
-            'visit_date'            =>  request('visit_date'),
-            'time_in'               =>  date("H:i:s", strtotime(request('time_in'))),
-            'time_out'              =>  date("H:i:s", strtotime(request('time_out'))),
-        ]);
 
-        return redirect('visitors')->with('success', 'New Vistor Added');
     }
 
-    /*function index()
-    {
-        return view('visitors');
-    }
+    /*
     function fetch_all(Request $request)
     {
         if($request->ajax())
@@ -121,4 +120,3 @@ class VisitorController extends Controller
             ->make(true);
         }
     }*/
-}

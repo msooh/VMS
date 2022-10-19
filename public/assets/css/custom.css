@@ -1,0 +1,24 @@
+.btn-primary {
+    background-color: #667618;
+    border-color: #667618;
+ }
+ .btn-danger{
+    background-color: #ed820e;
+    border-color: #ed820e;
+ }
+ .btn-warning{
+    background-color: #ed820e;
+    border-color: #ed820e;
+    color: #ffff;
+ }
+
+ .card .border-success{
+    background-color: #667618;
+ }
+.breadcrumb .bx{
+    color: #192800;
+}
+.page-item.active .page-link{
+    background-color: #667618;
+    border-color: #667618;
+}

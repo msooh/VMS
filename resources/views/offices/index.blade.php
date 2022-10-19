@@ -24,7 +24,7 @@
 			<!--end breadcrumb-->
 			
 			<hr/>
-			<div class="card border-top border-0 border-4 border-primary">
+			<div class="card border-top border-0 border-4 border-success">
 				<div class="card-body">
 					<div class="table-responsive">
 						<table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -39,18 +39,10 @@
 							<tbody>
 							@foreach($offices as $office)
 								<tr>
-									<td>{{ $office->name }}</td>
+									<td>{{ $office->office_name }}</td>
 									<td>{{ $office->office_number }}</td>
-									<td>{{ $office->department_name }}</td>
-									<td>{{ $office->court_name }}</td>
-									
-									<!--@if($site->shift_type =='1')
-										<td>Day</td>
-									@elseif($site->shift_type =='2')
-										<td>Night</td>
-									@else
-										<td>Dynamic</td>
-									@endif-->
+									<td>{{ $office->department->department_name }}</td>
+									<td>{{ $office->court->court_name }}</td>
 									<td>
 										<div class="dropdown">
 											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>

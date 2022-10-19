@@ -25,7 +25,7 @@
 		<hr />
 		<div class="row">
 			<div class="col-xl-12 mx-auto">
-				<div class="card border-top border-0 border-4 border-primary">
+				<div class="card border-top border-0 border-4 border-success">
 					<div class="card-body">
 						<div class="p-4 border rounded">
 							<form class="row g-3 needs-validation" action="{{ route('employees.store') }}" method="post" enctype="multipart/form-data" novalidate>

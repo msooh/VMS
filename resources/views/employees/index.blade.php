@@ -16,7 +16,7 @@
 							<li class="breadcrumb-item active" aria-current="page">Employee List</li>
 						</ol>
 					</nav>
-				</div>
+				</div> 
 				<div class="ms-auto">
 					
 				</div>
@@ -24,7 +24,7 @@
 			<!--end breadcrumb-->
 			
 			<hr/>
-			<div class="card border-top border-0 border-4 border-primary">
+			<div class="card border-top border-0 border-4 border-success">
 				<div class="card-body">
 					<div class="table-responsive">
 						<table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -35,6 +35,7 @@
 									<th>Phone Number</th>
 									<th>Email</th>
 									<th>Office</th>
+									<th>Department</th>
 									<th>Role</th>
 									<th>Action</th>
 								</tr>
@@ -48,12 +49,12 @@
 									<td>{{ $employee->phno }}</td>
 									<td>{{ $employee->email }}</td>
 									<td>{{ $employee->office->office_name }}</td>
+									@foreach($departments as $department)
+									@if($department->id == $employee->office->department_id)
+									<td>{{$department->department_name }}</td>
+									@endif
+									@endforeach
 									<td>{{ $employee->role->name }}</td>
-								<!--@if($employee->shift_type =='1')
-									<td>Permanent</td>
-								@else
-									<td>Relief</td>
-								@endif-->
 									<td>
 										<div class="dropdown">
 											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>

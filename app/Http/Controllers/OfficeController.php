@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 use App\Models\Office;
@@ -28,7 +30,7 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        $offices = Office::with(['department', 'court'])->get();
+        $offices = Office::with(['department', 'court',])->get();
         return view('offices.index', compact('offices'));
     }
 
@@ -40,8 +42,9 @@ class OfficeController extends Controller
     public function create()
 
     {
-        $courts = Court::all();
+       
         $departments = Department::all();
+        $courts = Court::all();
         return view('offices._form', compact('departments','courts',));
     }
 
