@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
         Route::post('roles', [SettingController::class, 'storeRole']);
         Route::get('courts', [SettingController::class, 'indexCourt'])->name('court');
         Route::post('courts', [SettingController::class, 'storeCourt']);
+        Route::get('badges', [SettingController::class, 'indexBadge'])->name('badge');
+        Route::post('badges', [SettingController::class, 'storeBadge']);
     });
 
 
@@ -71,8 +73,8 @@ Route::middleware('auth')->group(function () {
         Route::get('index', [VisitorController::class, 'index'])->name('index');
         Route::get('create', [VisitorController::class, 'create'])->name('create');    
         Route::post('store', [VisitorController::class, 'store'])->name('store');
-        Route::get('allocate', [EmployeeVisitorController::class, 'create'])->name('allocate');
-        Route::post('allocate', [EmployeeVisitorController::class, 'store']);
+        Route::post('checkout', [VisitorController::class, 'checkout'])->name('checkout');
+
     });
 
     /*Route::get('visitors', [VisitorController::class, 'index'])->name('visitors');

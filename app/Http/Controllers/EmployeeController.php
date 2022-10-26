@@ -48,11 +48,6 @@ class EmployeeController extends Controller
         $data['created_by'] = auth()->user()->id;
         $data['updated_by'] = auth()->user()->id;
         
-        /*if($request->file('avatar')):
-            $fileName = time().$request->file('avatar')->getClientOriginalName();
-            $path = $request->file('avatar')->storeAs('avatars', $fileName, 'public');
-            $data['avatar'] = '/storage/'.$path;
-        endif;*/
 
         Employee::create($data);
 

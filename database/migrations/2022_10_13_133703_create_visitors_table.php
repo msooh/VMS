@@ -17,16 +17,20 @@ return new class extends Migration
             $table->id();
             $table->string('visitor_name');
             $table->string('visitor_email');
-            $table->integer('visitor_id_number');
-            $table->integer('visitor_country_code');
-            $table->integer('visitor_phone_number');
-            $table->dateTime('visit_date');
-            $table->datetime('time_in');
-            $table->datetime('time_out');
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('visitor_id_number')->unique();
+            $table->string('visitor_phone_number');
+            $table->date('visit_date');
+            $table->time('time_in');
+            $table->time('time_out')->nullable();
+            $table->foreignId('office_id')->constrained('offices')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('avatar',300)->nullable();
             $table->foreignId('badge_id')->constrained('badges')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('visitor_status', ['In', 'Out']);
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by');
+            $table->foreign('updated_by')->references('id')->on('users');
+            $table->enum('visitor_status', ['In', 'Out'])->default('In');
             $table->timestamps();
         });
     }

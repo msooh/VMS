@@ -31,5 +31,9 @@ class Court extends Model
     {
         return $this->hasMany(Employee::class);
     }
-
+    
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
 }

@@ -12,7 +12,7 @@ File: app.css
   - Header
   - Metismenu
   - Extra CSS
-  - Invoice Page
+  - Reports Page
   - Chat box
   - Email box
   - Compose Mail
@@ -20,7 +20,7 @@ File: app.css
   - Background Colors
   - Authentication
   - Buttons 
-  - Pricing Table
+  - Tables
   - Forms
   - Responsive
 */
@@ -427,7 +427,7 @@ a {
 
 .topbar-nav .metismenu a:hover,
 
-.topbar-nav .metismenu a:focus,
+  .topbar-nav .metismenu a:focus,
 
 .topbar-nav .metismenu a:active {
 
@@ -722,83 +722,12 @@ a {
 }
 
 
-.product-img {
 
-
-	width: 60px;
-
-
-	height: 60px;
-
-
-	background-color: white;
-
-
-	display: flex;
-
-
-	align-items: center;
-
-
-	justify-content: center;
-
-
-	border-radius: 10px;
-
-
-	border: 1px solid #e6e6e6;
-
-
-}
-
-
-.product-img img {
-
-
-	width: 60px;
-
-
-	height: 60px;
-
-
-	padding: 6px;
-
-
-}
-
-
-.product-img-2 {
-	width: 45px;
-	height: 45px;
-	background-color: #fff;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 10px;
-	border: 1px solid #e6e6e6
-}
-
-.product-img-2 img {
-	width: 45px;
-	height: 45px;
-	padding: 1px
-}
 
 .border-light-2 {
     border-color: rgb(255 255 255 / 12%)!important;
 }
 
-
-.product-list {
-
-
-	position: relative;
-
-
-	height: 380px;
-
-
-}
 
 
 .dashboard-top-countries {
@@ -814,7 +743,7 @@ a {
 
 
 
-.customers-list {
+.employees-list {
 
 
 	position: relative;
@@ -830,101 +759,18 @@ a {
     height: 450px;
 }
 
-.product-list-2 {
-    position: relative;
-    height: 450px;
-}
 
-
-
-.product-list .row {
-
-
-	background-color: #f8f9fa;
-
-
-	-webkit-transition: all 0.2s;
-
-
-	-o-transition: all 0.2s;
-
-
-	transition: all 0.2s;
-
-
-}
 
 
 @media (min-width: 992px) {
 
 
-	.product-list .row:hover {
-
-
-		background-color: #fff;
-
-
-		margin-top: -.25rem;
-
-
-		margin-bottom: .25rem;
-
-
-		-webkit-box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2);
-
-
-		box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.2);
-
-
-	}
+	
 
 
 }
 
 
-.recent-product-img {
-
-
-	width: 40px;
-
-
-	height: 40px;
-
-
-	background-color: #fbfbfb;
-
-
-	display: flex;
-
-
-	align-items: center;
-
-
-	justify-content: center;
-
-
-	border-radius: 10px;
-
-
-	border: 1px solid #e6e6e6;
-
-
-}
-
-
-.recent-product-img img {
-
-
-	width: 40px;
-
-
-	height: 40px;
-
-
-	padding: 6px;
-
-
-}
 
 
 .theme-icons {
@@ -1140,7 +986,7 @@ a {
 }
 
 
-.customers-contacts a {
+.employees-contacts a {
 
 
 	font-size: 16px;
@@ -1218,7 +1064,7 @@ a {
 }
 
 
-.customers-list .customers-list-item {
+.employees-list .employees-list-item {
 
 
 	-webkit-transition: all 0.2s;
@@ -1236,7 +1082,7 @@ a {
 @media (min-width: 992px) {
 
 
-	.customers-list .customers-list-item:hover {
+	.employees-list .employees-list-item:hover {
 
 
 		background-color: #f8f9fa;
@@ -1641,10 +1487,10 @@ a {
 }
 
 
-/*Invoice Page*/
+/*Report Page*/
 
 
-#invoice {
+#report {
 
 
 	padding: 0px;
@@ -1653,7 +1499,7 @@ a {
 }
 
 
-.invoice {
+.report {
 
 
 	position: relative;
@@ -1671,7 +1517,7 @@ a {
 }
 
 
-.invoice header {
+.report header {
 
 
 	padding: 10px 0;
@@ -1686,7 +1532,7 @@ a {
 }
 
 
-.invoice .company-details {
+.report .company-details {
 
 
 	text-align: right
@@ -1695,7 +1541,7 @@ a {
 }
 
 
-.invoice .company-details .name {
+.report .company-details .name {
 
 
 	margin-top: 0;
@@ -1707,7 +1553,7 @@ a {
 }
 
 
-.invoice .contacts {
+.report .contacts {
 
 
 	margin-bottom: 20px
@@ -1716,28 +1562,10 @@ a {
 }
 
 
-.invoice .invoice-to {
 
 
-	text-align: left
 
-
-}
-
-
-.invoice .invoice-to .to {
-
-
-	margin-top: 0;
-
-
-	margin-bottom: 0
-
-
-}
-
-
-.invoice .invoice-details {
+.report .report-details {
 
 
 	text-align: right
@@ -1746,7 +1574,7 @@ a {
 }
 
 
-.invoice .invoice-details .invoice-id {
+.report .report-details .report-id {
 
 
 	margin-top: 0;
@@ -1758,7 +1586,7 @@ a {
 }
 
 
-.invoice main {
+.report main {
 
 
 	padding-bottom: 50px
@@ -1767,7 +1595,7 @@ a {
 }
 
 
-.invoice main .thanks {
+.report main .thanks {
 
 
 	margin-top: -100px;
@@ -1782,7 +1610,7 @@ a {
 }
 
 
-.invoice main .notices {
+.report main .notices {
 
 
 	padding-left: 6px;
@@ -1800,7 +1628,7 @@ a {
 }
 
 
-.invoice main .notices .notice {
+.report main .notices .notice {
 
 
 	font-size: 1.2em
@@ -1809,7 +1637,7 @@ a {
 }
 
 
-.invoice table {
+.report table {
 
 
 	width: 100%;
@@ -1827,10 +1655,10 @@ a {
 }
 
 
-.invoice table td,
+.report table td,
 
 
-.invoice table th {
+.report table th {
 
 
 	padding: 15px;
@@ -1845,7 +1673,7 @@ a {
 }
 
 
-.invoice table th {
+.report table th {
 
 
 	white-space: nowrap;
@@ -1860,7 +1688,7 @@ a {
 }
 
 
-.invoice table td h3 {
+.report table td h3 {
 
 
 	margin: 0;
@@ -1878,13 +1706,13 @@ a {
 }
 
 
-.invoice table .qty,
+.report table .qty,
 
 
-.invoice table .total,
+.report table .total,
 
 
-.invoice table .unit {
+.report table .unit {
 
 
 	text-align: right;
@@ -1896,7 +1724,7 @@ a {
 }
 
 
-.invoice table .no {
+.report table .no {
 
 
 	color: #fff;
@@ -1911,7 +1739,7 @@ a {
 }
 
 
-.invoice table .unit {
+.report table .unit {
 
 
 	background: #ddd
@@ -1920,7 +1748,7 @@ a {
 }
 
 
-.invoice table .total {
+.report table .total {
 
 
 	background: #667618;
@@ -1932,7 +1760,7 @@ a {
 }
 
 
-.invoice table tbody tr:last-child td {
+.report table tbody tr:last-child td {
 
 
 	border: none
@@ -1941,7 +1769,7 @@ a {
 }
 
 
-.invoice table tfoot td {
+.report table tfoot td {
 
 
 	background: 0 0;
@@ -1968,7 +1796,7 @@ a {
 }
 
 
-.invoice table tfoot tr:first-child td {
+.report table tfoot tr:first-child td {
 
 
 	border-top: none
@@ -1977,7 +1805,7 @@ a {
 }
 
 
-.invoice table tfoot tr:last-child td {
+.report table tfoot tr:last-child td {
 
 
 	color: #667618;
@@ -1992,7 +1820,7 @@ a {
 }
 
 
-.invoice table tfoot tr td:first-child {
+.report table tfoot tr td:first-child {
 
 
 	border: none
@@ -2001,7 +1829,7 @@ a {
 }
 
 
-.invoice footer {
+.report footer {
 
 
 	width: 100%;
@@ -2025,7 +1853,7 @@ a {
 @media print {
 
 
-	.invoice {
+	.report {
 
 
 		font-size: 11px!important;
@@ -2037,7 +1865,7 @@ a {
 	}
 
 
-	.invoice footer {
+	.report footer {
 
 
 		position: absolute;
@@ -2052,7 +1880,7 @@ a {
 	}
 
 
-	.invoice>div:last-child {
+	.report>div:last-child {
 
 
 		page-break-before: always
@@ -3887,114 +3715,6 @@ a {
 
 
 	border-radius: 3px;
-
-
-}
-
-
-/* Pricing Table*/
-
-
-.pricing-table .card {
-
-
-	-webkit-transition: all 0.2s;
-
-
-	-o-transition: all 0.2s;
-
-
-	transition: all 0.2s;
-
-
-	-webkit-border-radius: 15px;
-
-
-	border-radius: 15px;
-
-
-}
-
-
-.pricing-table .card .card-header {
-
-
-	border-top-left-radius: 15px;
-
-
-	border-top-right-radius: 15px;
-
-
-}
-
-
-@media (min-width: 992px) {
-
-
-	.pricing-table .card:hover {
-
-
-		margin-top: -.25rem;
-
-
-		margin-bottom: .25rem;
-
-
-		-webkit-box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
-
-
-		box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
-
-
-	}
-
-
-}
-
-
-.pricing-table .card .card-title {
-
-
-	font-size: 1rem;
-
-
-	letter-spacing: .2rem;
-
-
-	font-weight: 500;
-
-
-}
-
-
-.pricing-table .card .card-price {
-
-
-	font-size: 2.7rem;
-
-
-}
-
-
-.pricing-table .card .card-price .term {
-
-
-	font-size: .875rem;
-
-
-}
-
-
-.pricing-table .card ul li.list-group-item {
-
-
-	border-bottom: 1px solid rgb(0 0 0 / 0%);
-
-
-	color: #3b3b3b;
-
-
-	font-size: 16px;
 
 
 }

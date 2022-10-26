@@ -16,4 +16,9 @@ class Badge extends Model
     public function court() {
         return $this->belongsTo(Court::class);
     }
+
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
 }

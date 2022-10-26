@@ -13,8 +13,7 @@ use App\Models\Court;
 use App\Models\Badge;
 
 use DataTables;
-
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -58,6 +57,9 @@ class VisitorController extends Controller
         $data = $request->all();
         $data['created_by'] = auth()->user()->id;
         $data['updated_by'] = auth()->user()->id;
+        $data['visit_date'] = Carbon::today()->toDateString();
+        $data['time_in'] = Carbon::now()->tz('Africa/Nairobi')->toTimeString();
+        $date['time_out'] = Carbon::now()->tz('Africa/Nairobi')->toTimeString();
         
         if($request->file('avatar')):
             $fileName = time().$request->file('avatar')->getClientOriginalName();
@@ -68,6 +70,23 @@ class VisitorController extends Controller
         Visitor::create($data);
 
         return redirect()->back();
+    }
+    public function checkout()
+    {
+        $visitors = Visitor::all();
+        $visitor = Visitor::with(['employee', 'badge'])->get();
+        $date = Carbon::now()->tz('Africa/Nairobi');
+
+        $visitor_name = $visitor['visitor_name'];
+        if ($visitor->visitor_status =='In'):
+        
+        Visitor::where('visitor_name', $visitor_name)
+        ->update(['time_out' => $date->toTimeString(), 'visitor_status' => 'Out']);
+        endif;
+
+
+         return redirect()->back();
+
     }
  
 

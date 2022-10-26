@@ -26,11 +26,13 @@
                     <div class="menu-title">Settings</div>
                 </a>
                 <ul>
-                    <li> <a href="{{ route('department') }}"><i class="bx bx-right-arrow-alt"></i>Department</a>
+                    <li> <a href="{{ route('department') }}"><i class="bx bx-right-arrow-alt"></i>Departments</a>
                     </li>
-                    <li> <a href="{{ route('court') }}"><i class="bx bx-right-arrow-alt"></i>Court</a>
+                    <li> <a href="{{ route('court') }}"><i class="bx bx-right-arrow-alt"></i>Courts</a>
                     </li>
-                    <li> <a href="{{ route('role') }}"><i class="bx bx-right-arrow-alt"></i>Role</a>
+                    <li> <a href="{{ route('role') }}"><i class="bx bx-right-arrow-alt"></i>Roles</a>
+                    </li>
+                    <li> <a href="{{ route('badge') }}"><i class="bx bx-right-arrow-alt"></i>Badges</a>
                     </li>
                 </ul>
             </li>
