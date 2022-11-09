@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Models\Visitor;
 
@@ -33,11 +35,26 @@ class VisitorController extends Controller
     {
         $visitors = Visitor::with(['employee', 'badge'])->get();
         $employees = Employee::all();
+        $departments = DB::table('departments')->orderBy('department_name', 'ASC')->get();
         $offices = Office::all();
         $badges = Badge::all();
     
-        return view('visitors.index', compact('visitors', 'employees', 'offices', 'badges'));
+        return view('visitors.index', compact('visitors', 'employees', 'departments', 'offices', 'badges'));
     }
+
+    public function getoffices(Request $request) {
+        $data = Office::select('office_name', 'id')->where('department_id', $request->id)->get();
+
+        return response()->json($data);
+       
+    }
+    public function getemployees(Request $request) {
+        $data = Employee::select('name', 'id')->where('office_id', $request->id)->get();
+
+        return response()->json($data);
+       
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,36 +71,48 @@ class VisitorController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+        'visitor_name' => 'required',
+        'visitor_email' => 'required|email',
+        'visitor_id_number' => 'required|unique',
+        'visitor_phone_number' => 'required',
+        'department_id' => 'required',
+        
+    ]);
+ 
         $data = $request->all();
         $data['created_by'] = auth()->user()->id;
         $data['updated_by'] = auth()->user()->id;
         $data['visit_date'] = Carbon::today()->toDateString();
         $data['time_in'] = Carbon::now()->tz('Africa/Nairobi')->toTimeString();
-        $date['time_out'] = Carbon::now()->tz('Africa/Nairobi')->toTimeString();
+
+        
         
         if($request->file('avatar')):
             $fileName = time().$request->file('avatar')->getClientOriginalName();
             $path = $request->file('avatar')->storeAs('avatars', $fileName, 'public');
             $data['avatar'] = '/storage/'.$path;
         endif;
+    
 
         Visitor::create($data);
+        $data = Badge::select('badge_number', 'id')
+        ->where('visitor_id', $request->id)
+         ->update([ 'badge_status' => 'assigned']);
 
         return redirect()->back();
     }
-    public function checkout()
+    public function checkout(int $id)
     {
-        $visitors = Visitor::all();
-        $visitor = Visitor::with(['employee', 'badge'])->get();
+        $visitors = Visitor::with(['employee', 'badge'])->get();
         $date = Carbon::now()->tz('Africa/Nairobi');
 
-        $visitor_name = $visitor['visitor_name'];
-        if ($visitor->visitor_status =='In'):
         
-        Visitor::where('visitor_name', $visitor_name)
-        ->update(['time_out' => $date->toTimeString(), 'visitor_status' => 'Out']);
-        endif;
+        DB::table('visitors')
+        ->where(['id' => $id])
+         ->update(['time_out' => $date->toTimeString(), 'visitor_status' => 'Out', 'badge_status' => 'unassigned']);
 
+       
 
          return redirect()->back();
 

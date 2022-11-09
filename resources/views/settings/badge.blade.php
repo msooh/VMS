@@ -28,18 +28,18 @@
 					<div class="p-4 border rounded">
 						<form class="row g-3 needs-validation" action="" method="post" novalidate>
 							@csrf
+							<div class="row">
 							<div class="col-md-6">
 								<label for="validationCustom01" class="form-label">Badge Number</label>
 								<input type="number" class="form-control" id="validationCustom01" name="badge_number">
 							</div>
 							<div class="col-md-6">
-							<select class="form-control" id="validationCustom04" name="court_id" required>
-										<option selected disabled value="">Select Court... </option>
-										@foreach($courts as $court )
-											<option value="{{ $court->id }}">{{ $court->court_name }} </option>
-										@endforeach
-									</select>
+								<label for="validationCustom01" class="form-label">Badge Status</label>
+								<input type="text" class="form-control" id="validationCustom01" name="badge_status">
 							</div>
+							</div>
+							
+						
 							<div class="col-6" style="padding-top: 30px;">
 								<button class="btn btn-primary success" type="submit">Save</button>
 							</div>
@@ -51,6 +51,7 @@
 							<thead>
 								<tr>
 									<th>Badge Number</th>
+									<th>Badge Status</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -58,6 +59,7 @@
 							@foreach($badges as $badge)
 								<tr>
 									<td>{{ $badge->badge_number }}</td>
+									<td>{{ $badge->badge_status }}</td>
 									<td>
 										<div class="dropdown">
 											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>

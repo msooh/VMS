@@ -3,7 +3,7 @@
 <link href="{{ asset('assets/css/booking.css') }}" rel="stylesheet">
 @endpush
 
-@section('title', 'Visitors')
+@section('title', 'Appointments')
 
 @section('content')
 	<!--start page wrapper -->
@@ -16,7 +16,7 @@
 						<ol class="breadcrumb mb-0 p-0">
 							<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 							</li>
-							<li class="breadcrumb-item active" aria-current="page">Visitors</li>
+							<li class="breadcrumb-item active" aria-current="page">Appointments</li>
 						</ol>
 					</nav>
 				</div>
@@ -25,7 +25,7 @@
 				<div class="float-md-end">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top">
-                                    <li class="hidden-xs"><a href="#" class="new-visitor" data-bs-toggle="modal" data-bs-target="#new-visitor">Add Visitor</a></li>
+                                    <li class="hidden-xs"><a href="#" class="new-appointment" data-bs-toggle="modal" data-bs-target="#new-appointment">New Appointment</a></li>
                                     
                                 </ul>
                             </div>
@@ -42,87 +42,106 @@
 						<table id="example" class="table table-striped table-bordered" style="width:100%">
 							<thead>
 								<tr>
-									<th>Avatar</th>
+									<th>Appointment Number</th>
                                     <th>Visitor Name</th>
                                     <th>Phone Number</th>
                                     <th>ID Number</th>
-                                    <th>Date In</th>
-                                    <th>Time In</th>
+                                    <th>Date</th>
+                                    <th>Expected Time</th>
                                     <th>Host</th>
-                                    <th>Office</th>
-									<th>Badge</th>
-                                    <th>Timeout</th>
+                                    <th>Department</th>
                                     <th>Status</th>
                                     <th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($visitors as $visitor)
+								@foreach($appointments as $appointment)
 								<tr>
-									<td><img src="{{ asset($visitor->avatar) }}" width="50" height="50" class="rounded-circle" alt="" onerror="this.src='{{ asset('assets/images/visitors/passport.jpg') }}'"/></td>
-									<td>{{ $visitor->visitor_name }}</td>
-									<td>{{ $visitor->visitor_phone_number }}</td>
-									<td>{{ $visitor->visitor_id_number }}</td>
-                                    <td>{{ $visitor->visit_date }}</td>
-                                    <td>{{ $visitor->time_in}}</td>
-                                    <td>{{ $visitor->employee->name }}</td>
-									@foreach($offices as $office)
-									@if($office->id == $visitor->employee->office_id)
-									<td>{{$office->office_name }}</td>
-									<td>{{ $visitor->badge->badge_number }}</td>
-									@endif
-									@endforeach
-									<td>{{ $visitor->time_out}}</td>
-									@if($visitor->visitor_status =='In')
-									<td><span class="badge bg-success">In</span></td>
+									<td>{{ $appointment->id }}</td>
+									<td>{{ $appointment->name }}</td>
+									<td>{{ $appointment->phone_number }}</td>
+									<td>{{ $appointment->id_number }}</td>
+                                    <td>{{ $appointment->appointment_date }}</td>
+                                    <td>{{ $appointment->expected_time}}</td>
+                                    <td>{{ $appointment->employee->name }}</td>
+									<td>{{ $appointment->department->department_name }}</td>
+									@if($appointment->appointment_status =='Pending')
+									<td><span class="badge bg-info">Pending</span></td>
+									@elseif(($appointment->appointment_status =='Approved'))
+									<td><span class="badge bg-success">Approved</span></td>
 									@else
-									<td><span class="badge bg-danger">Out</span></td>
+									<td><span class="badge bg-danger">Rejected</span></td>
 									@endif
-									<!--<td>
-										<div class="dropdown">
-											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
-											</div>
-											<div class="dropdown-menu dropdown-menu-end"> 
-												<a class="dropdown-item" href="#">Check Out</a>
-                                                <a class="dropdown-item" href="#">Edit</a>
-												<a class="dropdown-item" href="javascript:;">Delete</a>
-											</div>
-										</div>
-									</td>-->
-									@if($visitor->visitor_status =='In')
+									@if($appointment->appointment_status =='Pending')
 									<td>
 										<div class="dropdown">
 											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
 											</div>
 											<div class="dropdown-menu dropdown-menu-end"> 
-												<a class="dropdown-item" href="#" class="checkout" data-bs-toggle="modal" data-bs-target="#checkout{{$visitor->id}}">Check Out</a>
+												<a class="dropdown-item" href="#" class="approve" data-bs-toggle="modal" data-bs-target="#approve{{$appointment->id}}">Approve</a>
+												<a class="dropdown-item" href="#" class="reject" data-bs-toggle="modal" data-bs-target="#reject{{$appointment->id}}">Reject</a>
+												<a class="dropdown-item" href="javascript:;">Delete</a>											
 											</div>
 										</div>
 									</td>
-									<!--Checkout Modal-->
-
-								<div class="modal fade" id="checkout{{$visitor->id}}" tabindex="-1" aria-labelledby="checkoutLabel{{$visitor->id}}" aria-hidden="true">
+									<!--Approve Modal-->
+									<div class="modal fade" id="approve{{$appointment->id}}" tabindex="-1" aria-labelledby="approveLabel{{$appointment->id}}" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title" id="checkoutLabel{{$visitor->id}}">Checkout</h5>
+												<h5 class="modal-title" id="approveLabel{{$appointment->id}}">Approve Appointment</h5>
 												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 											</div>
-										<form action="{{ route('visitors.checkout', $visitor->id) }}" method="post" enctype="multipart/form-data"> 
+										<form action="{{ route('appointments.approve', $appointment->id) }}" method="post" enctype="multipart/form-data"> 
 										@csrf
 											<div class="modal-body">
-											Are you sure you want to checkout {{$visitor->visitor_name}}?
+											Are you sure you want to accept {{$appointment->name}}'s Appointment?
 											</div>
 											<div class="modal-footer">
 												<div class="form-btn">
 													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-													<button type="submit" class="submit btn btn-primary">Checkout</button>
+													<button type="submit" class="submit btn btn-primary">Confirm</button>
 												</div>
 											</div>
 										</form>	
 										</div>
 										</div>
 									</div>
+									<!--Reject Modal-->
+									<div class="modal fade" id="reject{{$appointment->id}}" tabindex="-1" aria-labelledby="rejectLabel{{$appointment->id}}" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="rejectLabel{{$appointment->id}}">Reject Appointment</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+										<form action="{{ route('appointments.reject', $appointment->id) }}" method="post" enctype="multipart/form-data"> 
+										@csrf
+											<div class="modal-body">
+											Are you sure you want to reject {{$appointment->name}}'s appointment?
+											</div>
+											<div class="modal-footer">
+												<div class="form-btn">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+													<button type="submit" class="submit btn btn-primary">Confirm</button>
+												</div>
+											</div>
+										</form>	
+										</div>
+										</div>
+									</div>
+									@elseif($appointment->appointment_status =='Approved')
+									<td>
+										<div class="dropdown">
+											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end"> 
+												<a class="dropdown-item" href="#">View</a>
+												<a class="dropdown-item" href="#">Edit</a>
+												<a class="dropdown-item" href="javascript:;">Delete</a>
+											</div>
+										</div>
+									</td>
 									@else
 									<td>
 										<div class="dropdown">
@@ -130,6 +149,7 @@
 											</div>
 											<div class="dropdown-menu dropdown-menu-end"> 
 												<a class="dropdown-item" href="#">View</a>
+												<a class="dropdown-item" href="javascript:;">Delete</a>
 											</div>
 										</div>
 									</td>
@@ -146,7 +166,7 @@
 	</div>
 	<!--end page wrapper -->
 	<!-- Modal -->
-    <div id="new-visitor" class="modal fade" role="dialog">
+    <div id="new-appointment" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -154,39 +174,31 @@
                 <div class="booking-form"> 
                     <div class="form-header"> 
 					<button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h1>New Visitor</h1> 
+                        <h1>New Appointment</h1> 
 						
                     </div> 
-                    <form class="row g-3 needs-validation" action="{{ route('visitors.store') }}" method="post" enctype="multipart/form-data" novalidate> 
+                    <form class="row g-3 needs-validation" action="{{ route('appointments.store') }}" method="post" enctype="multipart/form-data" novalidate> 
                         @csrf
-						<!--<div class="row">
-						<div class="col-md-6 input-group mb-3">
-							<input type="file" class="form-control" id="avatar" name="avatar">
-							<label class="input-group-text" for="avatar">Upload</label>
-						</div>
-						</div>
-						<div class="col-md-6 input-group mb-3">
-							<input type="file" class="form-control" id="avatar" name="avatar">
-							<label class="input-group-text" for="avatar">Upload</label>
-						</div>--> 
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group"> 
-									<input type="text" name="visitor_name" class="form-control" placeholder="Visitor Name" />
+									<input type="text" name="name" class="form-control" placeholder="Full Name" />
 									<span class="form-label">Name</span>
-									@if($errors->has('visitor_name'))
-										<span class="text-danger">{{ $errors->first('visitor_name') }}</span>
+									@if($errors->has('name'))
+										<span class="text-danger">{{ $errors->first('name') }}</span>
 									@endif
+
 								</div>
 							</div>
+                        
                         </div> 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                <input class="form-control" type="email" id="validationCustom04" name="visitor_email" placeholder="Enter Email Address"> 
+                                <input class="form-control" type="email" id="validationCustom04" name="email" placeholder="Enter Email Address"> 
                                     <span class="form-label">Email</span>
-									@if($errors->has('visitor_email'))
-										<span class="text-danger">{{ $errors->first('visitor_email') }}</span>
+									@if($errors->has('email'))
+										<span class="text-danger">{{ $errors->first('email') }}</span>
 									@endif
                                 </div>
                             </div>
@@ -195,23 +207,22 @@
 							<div class="col-md-7">
                                 <div class="form-group"> 
 									
-									<input class="form-control" id="phone"  type="tel" name="visitor_phone_number" required >        
+									<input class="form-control" id="phone"  type="tel" name="phone_number" required >        
 									<span id="valid-msg" class="hide"></span>
 									<span id="error-msg" class="hide"></span>
 									<span class="form-label">Phone</span>
-									@if($errors->has('visitor_phone_number'))
-										<span class="text-danger">{{ $errors->first('visitor_phone_number') }}</span>
+									@if($errors->has('phone_number'))
+										<span class="text-danger">{{ $errors->first('phone_number') }}</span>
 									@endif
                                 </div>
                         	</div>
 							<div class="col-md-5">
 								<div class="form-group"> 
-                                	<input class="form-control" type="id" name="visitor_id_number" placeholder="ID/Passport">
+                                	<input class="form-control" type="id" name="id_number" placeholder="ID/Passport">
 										<span class="form-label">ID Number</span>
-										@if($errors->has('visitor_id_number'))
-										<span class="text-danger">{{ $errors->first('visitor_id_number') }}</span>
-										@endif
-										<div class="invalid-feedback">Please provide a valid ID/Passport.</div>
+										@if($errors->has('id_number'))
+										<span class="text-danger">{{ $errors->first('id_number') }}</span>
+									@endif
                             	</div>
 							</div>
 						</div>
@@ -231,37 +242,40 @@
                             </div>
 							<div class="col-md-5">
 								<div class="form-group">
-									<select class="form-control officename" id="office" name="office_id" required>
-									<option value="0" selected disabled>--Choose Office--</option>
-										
-									</select>
-								</div>	
-                            </div>
-
-						</div>
-                        <div class="row"> 
-                                <div class="col-md-12">
-									<div class="form-group">
 									<select class="form-control" id="employee" name="employee_id" required>
 									<option value="0" selected disabled>Choose Host</option>
 										
 									</select>
-									</div>
-                                </div>   
-                    	</div>
+									@if($errors->has('employee_id'))
+										<span class="text-danger">{{ $errors->first('employee_id') }}</span>
+									@endif
+								</div>
+                            </div>
+
+						</div>
 						<div class="row">
-								<div class="col-md-12"> 
-									<select class="form-control" id="validationCustom04" name="badge_id" required>
-										<option selected disabled value="">Choose badge... </option>
-										@foreach($badges as $badge )
-											<option value="{{ $badge->id }}">{{ $badge->badge_number }} </option>
-										@endforeach
-									</select>
-                                </div> 
+							<div class="col-md-7">
+                                <div class="form-group"> 
+									<input class="form-control mydate" id="date" type="date" min="2010-04-01" max="2040-04-30" name="appointment_date" required >        
+									<span class="form-label">Date</span>
+									@if($errors->has('appointment_date'))
+										<span class="text-danger">{{ $errors->first('appointment_date') }}</span>
+									@endif
+                                </div>
+                        	</div>
+							<div class="col-md-5">
+								<div class="form-group"> 
+                                	<input class="form-control" id="time" type="time" min="08:00" max="17:00" name="expected_time" onkeyup=enforceMinMax(this) placeholder="Expected Time">
+										<span class="form-label">Time</span>
+										@if($errors->has('expected_time'))
+										<span class="text-danger">{{ $errors->first('expected_time') }}</span>
+									@endif
+                            	</div>
 							</div>
+						</div>
 							
                                 <div class="form-btn">
-                                    <button class="submit-btn">Check In</button>
+                                    <button class="submit-btn">Book Now</button>
                                 </div>
                     </form>
                 </div>
@@ -278,19 +292,19 @@
 	<script src="{{ asset('assets/plugins/intl-tel-input/js/intlTelInput.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/intl-tel-input/js/utils.js') }}"></script>
 	<script src="{{ asset('assets/plugins/intl-tel-input/js/intlTelInput-jquery.min.js') }}"></script>
-	
+	<script src="{{ asset('assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js') }}"></script>
+	@if (count($errors) > 0)
+    <script>
+        $( document ).ready(function() {
+            $('#new-appointment').modal('show');
+        });
+    </script>
+	@endif
 	<script>
 		$(document).ready(function() {
 			$('#example').DataTable();
 		  } );
 	</script>
-	@if (count($errors) > 0)
-    <script>
-        $( document ).ready(function() {
-            $('#new-visitor').modal('show');
-        });
-    </script>
-@endif
 	<script>
 		$(document).ready(function() {
 			var table = $('#example2').DataTable( {
@@ -331,11 +345,11 @@ var reset = function() {
 // on blur: validate
 input.addEventListener('blur', function() {
   reset();
-  var visitor_phone_number = iti.getNumber();
+  var phone_number = iti.getNumber();
   if (input.value.trim()) {
     if (iti.isValidNumber()) {
       validMsg.classList.remove("hide");
-	  document.getElementById('phone').value = visitor_phone_number;
+	  document.getElementById('phone').value = phone_number;
 	  return true;
 
     } else {
@@ -359,43 +373,19 @@ $("form").submit(function() {
 <script type="text/javascript">
  $(document).ready(function() {
 	$(document).on('change', '.departmentname', function(){
-		$('#office').empty().append('<option value="null">-Select Office-</option>');
+		$('#employee').empty().append('<option value="null">-Select Host-</option>');
 		//console.log("change");
 		var department_id=$(this).val();
 	 	var div = $(this).parent();
 	 	
 			$.ajax({
 					type:'get',
-					url:'{!!URL::to('getoffices')!!}',
+					url:'{!!URL::to('getemployees')!!}',
 					data: {'id':department_id},
 					success:function(data){
 						//console.log('success');
 						//console.log(data);
 						//console.log(data.length);
-						
-						for (var i = 0; i <= data.length-1; i++) { 
-                		$('#office').append('<option value="' + data[i].id + '">' + data[i].office_name + '</option>'); 
-            }
-						
-					},
-					error:function(){
-
-					}
-			});
-	});
-	$(document).on('change', '.officename', function(){
-		$('#employee').empty().append('<option value="null">Choose Host...</option>');
-		//console.log("change");
-		var office_id=$(this).val();
-	 	var div = $(this).parent();
-	 	
-			$.ajax({
-					type:'get',
-					url:'{!!URL::to('getemployees')!!}',
-					data: {'id':office_id},
-					success:function(data){
-						//console.log('success');
-						//console.log(data);
 						
 						for (var i = 0; i <= data.length-1; i++) { 
                 		$('#employee').append('<option value="' + data[i].id + '">' + data[i].name + '</option>'); 
@@ -406,12 +396,59 @@ $("form").submit(function() {
 
 					}
 			});
-	});
-	 
+	});	 
        
     });
 </script>
 
+<script>
+	$(document).ready(function() {
+		$('#date').bootstrapMaterialDateTimePicker({
+			format: 'DD-MM-YYYY',
+    		weekStart: 1,
+			time: false,
+			clearButton: true,
+			minDate : new Date(),
+			disabledDates: [new Date()],
+}); 
+		  } );
+
+</script>
+<script>
+	var today = new Date().toISOString().split('T')[0];
+    $("#date").attr('min', today);
+
+	const picker = document.getElementById('date');
+	picker.addEventListener('input', function(e){
+  	var day = new Date(this.value).getUTCDay();
+	if([6,0].includes(day)){
+    e.preventDefault();
+    this.value = '';
+    alert('Weekends not allowed');
+	
+  }
+});
+</script>
+
+
+<script>
+	const timeInput = document.getElementById("time");
+	timeInput.value = '10:00';
+
+	let previousValue = timeInput.value;
+
+	timeInput.onchange = () => {
+  	console.log(previousValue)
+  	console.log(timeInput.value)
+  
+  if (timeInput.value < timeInput.min || timeInput.value > timeInput.max) {
+    timeInput.value = previousValue;
+	alert('Working hours is between 8:00 - 17:00');
+  }
+  
+  previousValue = timeInput.value;
+}
+</script>
 	
 	
 @endpushOnce

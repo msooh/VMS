@@ -11,7 +11,7 @@
         </div>
     </div>
     <nav class="topbar-nav">
-        <ul class="metismenu" id="menu">
+        <ul class="metismenu" id="menu" style="display:none;">
             <li>
                 <a href="{{ route('dashboard') }}" class="has-arrow">
                     <div class="parent-icon"><i class='bx bx-home-circle'></i>
@@ -19,13 +19,13 @@
                     <div class="menu-title">Dashboard</div>
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bx-category"></i>
                     </div>
                     <div class="menu-title">Settings</div>
                 </a>
-                <ul>
+                <ul class="sublist">
                     <li> <a href="{{ route('department') }}"><i class="bx bx-right-arrow-alt"></i>Departments</a>
                     </li>
                     <li> <a href="{{ route('court') }}"><i class="bx bx-right-arrow-alt"></i>Courts</a>
@@ -84,7 +84,7 @@
                 <ul>
                     <li> <a href="{{ route('visitors.index') }}"><i class="bx bx-right-arrow-alt"></i>Visitors</a>
                     </li>
-                    <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Appointments</a>
+                    <li> <a href="{{ route('appointments.index') }}"><i class="bx bx-right-arrow-alt"></i>Appointments</a>
                     </li>
                 </ul>
             </li>

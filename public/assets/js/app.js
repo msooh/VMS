@@ -52,10 +52,15 @@ $(function () {
 			o = o.parent("").addClass("").parent("").addClass("");
 		}
 	}),
+
 	// metismenu
-	$(function () {
-		$('#menu').metisMenu();
-	});
+	$(document).ready(function(){
+		$(function () {
+			$('#menu').metisMenu().show()
+		});
+		});
+		
+	
 	// chat toggle
 	$(".chat-toggle-btn").on("click", function () {
 		$(".chat-wrapper").toggleClass("chat-toggled");

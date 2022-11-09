@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Validation Language Lines
+    |   Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines contain the default error messages used by
@@ -153,8 +153,47 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'visitor_email' => [
+            'required' => 'Hey, you forgot your email address!',
+            'max' => 'Your email address is too long!',
+            
+        ],
+        'visitor_name' => [
+            'required' => 'We need to know your name!',
+        ],
+        'visitor_phone_number' => [
+            'required' => 'Phone number required',
+        ],
+        'visitor_id_number' => [
+            'required' => 'ID/Passport required',
+            'unique' => 'Already in our records',
+        ],
+        'department_id' => [
+            'required' => 'Mandatory Field',
+        ],
+        //Appointments Validations
+        'name' => [
+            'required' => 'We need to know your name!',
+        ],
+        'email' => [
+            'required' => 'Hey, you forgot your email address!',
+            'max' => 'Your email address is too long!',
+            
+        ],
+        'phone_number' => [
+            'required' => 'Phone number required',
+        ],
+        'id_number' => [
+            'required' => 'ID/Passport required',
+        ],
+        'appointment_date' => [
+            'required' => 'Please select the date',
+        ],
+        'expected_time' => [
+            'required' => 'Please select the time',
+        ],
+        'employee_id' => [
+            'required' => 'Mandatory Field',
         ],
     ],
 

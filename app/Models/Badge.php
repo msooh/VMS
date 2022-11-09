@@ -10,7 +10,7 @@ class Badge extends Model
     use HasFactory;
 
     protected $fillable = [
-        'badge_number', 'court_id',
+        'badge_number', 'badge_status',
     ];
 
     public function court() {

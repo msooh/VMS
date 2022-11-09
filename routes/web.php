@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,15 +74,20 @@ Route::middleware('auth')->group(function () {
         Route::get('index', [VisitorController::class, 'index'])->name('index');
         Route::get('create', [VisitorController::class, 'create'])->name('create');    
         Route::post('store', [VisitorController::class, 'store'])->name('store');
-        Route::post('checkout', [VisitorController::class, 'checkout'])->name('checkout');
+        Route::post('checkout/{id}', [VisitorController::class, 'checkout'])->name('checkout');
 
     });
+    Route::get('getoffices', [VisitorController::class, 'getoffices'])->name('getoffices');
+    Route::get('getemployees', [VisitorController::class, 'getemployees'])->name('getemployees');
 
-    /*Route::get('visitors', [VisitorController::class, 'index'])->name('visitors');
+    Route::prefix('appointments')->name('appointments.')->group(function () {
+        Route::get('index', [AppointmentController::class, 'index'])->name('index');
+        Route::get('create', [AppointmentController::class, 'create'])->name('create');    
+        Route::post('store', [AppointmentController::class, 'store'])->name('store');
+        Route::post('approve/{id}', [AppointmentController::class, 'approve'])->name('approve');
+        Route::post('reject/{id}', [AppointmentController::class, 'reject'])->name('reject');
 
-    Route::post('visitors/add_validation', [VisitorController::class, 'add_validation'])->name('visitor.add_validation');
-
-    Route::get('visitors/fetchall', [VisitorController::class, 'fetch_all'])->name('visitors.fetchall');*/
+    });
 
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
     

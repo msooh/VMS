@@ -329,6 +329,7 @@ a {
 
 	background: transparent;
 
+
 }
 
 .topbar-nav .metismenu {
@@ -347,6 +348,10 @@ a {
 
 	flex-direction: column;
 
+}
+
+#menu.closed > ul{
+	display: none;
 }
 
 .topbar-nav .metismenu > li {
@@ -465,13 +470,18 @@ a {
 
 	}
 
+	.topbar-nav .metismenu.closed {
+		display:none;
+	}
+	
+
 	.topbar-nav .metismenu > li > ul {
 
 		position: absolute;
 
 		top: 100%;
 
-		min-width: 100%;
+		min-width: 100%;		
 
 		z-index: 1001;
 
@@ -3717,6 +3727,18 @@ a {
 	border-radius: 3px;
 
 
+}
+
+.new-appointment {
+    background: #667618 none repeat scroll 0 0;
+    border-radius: 100px;
+    color: #ffff;
+    font-size: 14px;
+    font-weight: 600;
+	float: right !important;
+    padding: 10px 45px 10px 45px;
+	position: inline-block;
+	margin-right: 0;
 }
 
 .new-visitor {
