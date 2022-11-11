@@ -15,7 +15,7 @@ $(function () {
 	});
 	// toggle menu button
 	$(".toggle-icon").click(function () {
-		if ($(".wrapper").hasClass("toggled")) {
+		if ($(".wrapper").hasClass("toggled")) {  
 			// unpin sidebar when hovered
 			$(".wrapper").removeClass("toggled");
 			$(".sidebar-wrapper").unbind("hover");

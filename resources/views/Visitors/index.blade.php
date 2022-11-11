@@ -25,7 +25,7 @@
 				<div class="float-md-end">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top">
-                                    <li class="hidden-xs"><a href="#" class="new-visitor" data-bs-toggle="modal" data-bs-target="#new-visitor">Add Visitor</a></li>
+                                    <li class="hidden-xs"><a href="#" class="new-visitor" data-bs-toggle="modal" data-bs-target="#new-visitor">+ Add Visitor</a></li>
                                     
                                 </ul>
                             </div>
@@ -230,17 +230,6 @@
 								</div>	
                             </div>
 							<div class="col-md-5">
-								<div class="form-group">
-									<select class="form-control officename" id="office" name="office_id" required>
-									<option value="0" selected disabled>--Choose Office--</option>
-										
-									</select>
-								</div>	
-                            </div>
-
-						</div>
-                        <div class="row"> 
-                                <div class="col-md-12">
 									<div class="form-group">
 									<select class="form-control" id="employee" name="employee_id" required>
 									<option value="0" selected disabled>Choose Host</option>
@@ -248,13 +237,19 @@
 									</select>
 									</div>
                                 </div>   
+
+						</div>
+                        <div class="row"> 
+                                
                     	</div>
 						<div class="row">
 								<div class="col-md-12"> 
 									<select class="form-control" id="validationCustom04" name="badge_id" required>
 										<option selected disabled value="">Choose badge... </option>
 										@foreach($badges as $badge )
+										@if($badge->badge_status =='unassigned')
 											<option value="{{ $badge->id }}">{{ $badge->badge_number }} </option>
+										@endif
 										@endforeach
 									</select>
                                 </div> 
@@ -359,43 +354,19 @@ $("form").submit(function() {
 <script type="text/javascript">
  $(document).ready(function() {
 	$(document).on('change', '.departmentname', function(){
-		$('#office').empty().append('<option value="null">-Select Office-</option>');
+		$('#employee').empty().append('<option value="null">-Select Host-</option>');
 		//console.log("change");
 		var department_id=$(this).val();
 	 	var div = $(this).parent();
 	 	
 			$.ajax({
 					type:'get',
-					url:'{!!URL::to('getoffices')!!}',
+					url:'{!!URL::to('getemployees')!!}',
 					data: {'id':department_id},
 					success:function(data){
 						//console.log('success');
 						//console.log(data);
 						//console.log(data.length);
-						
-						for (var i = 0; i <= data.length-1; i++) { 
-                		$('#office').append('<option value="' + data[i].id + '">' + data[i].office_name + '</option>'); 
-            }
-						
-					},
-					error:function(){
-
-					}
-			});
-	});
-	$(document).on('change', '.officename', function(){
-		$('#employee').empty().append('<option value="null">Choose Host...</option>');
-		//console.log("change");
-		var office_id=$(this).val();
-	 	var div = $(this).parent();
-	 	
-			$.ajax({
-					type:'get',
-					url:'{!!URL::to('getemployees')!!}',
-					data: {'id':office_id},
-					success:function(data){
-						//console.log('success');
-						//console.log(data);
 						
 						for (var i = 0; i <= data.length-1; i++) { 
                 		$('#employee').append('<option value="' + data[i].id + '">' + data[i].name + '</option>'); 
@@ -406,8 +377,7 @@ $("form").submit(function() {
 
 					}
 			});
-	});
-	 
+	});	 
        
     });
 </script>

@@ -11,6 +11,7 @@ class Appointment extends Model
 
     protected $fillable = [
         'name',
+        'app_no',
         'email',
         'id_number',
         'phone_number',
@@ -34,6 +35,9 @@ class Appointment extends Model
      */
     public function department() {
         return $this->belongsTo(Department::class);
+    }
+    public function visitor() {
+        return $this->belongsTo(Visitor::class);
     }
   
 }

@@ -350,9 +350,6 @@ a {
 
 }
 
-#menu.closed > ul{
-	display: none;
-}
 
 .topbar-nav .metismenu > li {
 
@@ -470,7 +467,7 @@ a {
 
 	}
 
-	.topbar-nav .metismenu.closed {
+	.metismenu.closed {
 		display:none;
 	}
 	
@@ -4726,11 +4723,6 @@ input::placeholder {
 
 @media screen and (max-width: 1280px) {
 
-	.topbar-logo-header{
-
-		display: none;
-
-	}
 
 	.page-wrapper {
 

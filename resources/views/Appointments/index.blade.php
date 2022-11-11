@@ -2,6 +2,10 @@
 @push('css')
 <link href="{{ asset('assets/css/booking.css') }}" rel="stylesheet">
 @endpush
+<?php
+use Carbon\Carbon;
+?>
+
 
 @section('title', 'Appointments')
 
@@ -25,7 +29,7 @@
 				<div class="float-md-end">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top">
-                                    <li class="hidden-xs"><a href="#" class="new-appointment" data-bs-toggle="modal" data-bs-target="#new-appointment">New Appointment</a></li>
+                                    <li class="hidden-xs"><a href="#" class="new-appointment" data-bs-toggle="modal" data-bs-target="#new-appointment">+ New Appointment</a></li>
                                     
                                 </ul>
                             </div>
@@ -57,7 +61,7 @@
 							<tbody>
 								@foreach($appointments as $appointment)
 								<tr>
-									<td>{{ $appointment->id }}</td>
+									<td>{{ $appointment->app_no }}</td>
 									<td>{{ $appointment->name }}</td>
 									<td>{{ $appointment->phone_number }}</td>
 									<td>{{ $appointment->id_number }}</td>
@@ -131,6 +135,44 @@
 										</div>
 									</div>
 									@elseif($appointment->appointment_status =='Approved')
+									@if($appointment->appointment_date == \Carbon\Carbon::today()->toDateString())
+									<td>
+										<div class="dropdown">
+											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
+											</div>
+											<div class="dropdown-menu dropdown-menu-end"> 
+											<a class="dropdown-item" href="#" class="checkin" data-bs-toggle="modal" data-bs-target="#checkin{{$appointment->id}}">Check In</a>
+												<a class="dropdown-item" href="#">View</a>
+												<a class="dropdown-item" href="#">Edit</a>
+												<a class="dropdown-item" href="javascript:;">Delete</a>
+											</div>
+										</div>
+									</td>
+									<!--Checkout Modal-->
+
+								<div class="modal fade" id="checkin{{$appointment->id}}" tabindex="-1" aria-labelledby="checkinLabel{{$appointment->id}}" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="checkinLabel{{$appointment->id}}">CheckIn</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+										<form action="{{ route('visitors.store', $appointment->id) }}" method="post" enctype="multipart/form-data"> 
+										@csrf
+											<div class="modal-body">
+											Are you sure you want to checkin {{$appointment->name}}?
+											</div>
+											<div class="modal-footer">
+												<div class="form-btn">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+													<button type="submit" class="submit btn btn-primary">Checkin</button>
+												</div>
+											</div>
+										</form>	
+										</div>
+										</div>
+									</div>
+									@else
 									<td>
 										<div class="dropdown">
 											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>
@@ -142,6 +184,7 @@
 											</div>
 										</div>
 									</td>
+									@endif
 									@else
 									<td>
 										<div class="dropdown">
@@ -243,7 +286,7 @@
 							<div class="col-md-5">
 								<div class="form-group">
 									<select class="form-control" id="employee" name="employee_id" required>
-									<option value="0" selected disabled>Choose Host</option>
+									<option value="0" selected disabled>Choose Host...</option>
 										
 									</select>
 									@if($errors->has('employee_id'))

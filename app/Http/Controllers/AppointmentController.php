@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 use App\Models\Appointment;
 use App\Models\Employee;
 use App\Models\Department;
@@ -34,6 +36,7 @@ class AppointmentController extends Controller
     
         return view('appointments.index', compact('appointments', 'employees', 'departments'));
     }
+   
 
     public function getemployees(Request $request) {
         $data = Employee::select('name', 'id')->where('department_id', $request->id)->get();
@@ -69,8 +72,11 @@ class AppointmentController extends Controller
         'expected_time' => 'required',
         
     ]);
- 
+        $id = UniqueIdGenerator::generate(['table' => 'appointments', 'field'=>'app_no', 'length' => 14, 'prefix' =>'APN-', 'suffix' =>date('ymd')]);
+
+         
         $data = $request->all();
+        $data['app_no'] = $id;
         $data['created_by'] = auth()->user()->id;
         $data['updated_by'] = auth()->user()->id;
 

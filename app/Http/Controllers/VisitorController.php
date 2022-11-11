@@ -11,6 +11,7 @@ use App\Models\Visitor;
 use App\Models\Employee;
 use App\Models\Office;
 use App\Models\Court;
+use App\Models\Appointment;
 
 use App\Models\Badge;
 
@@ -35,6 +36,7 @@ class VisitorController extends Controller
     {
         $visitors = Visitor::with(['employee', 'badge'])->get();
         $employees = Employee::all();
+        $appointments = Appointment::all();
         $departments = DB::table('departments')->orderBy('department_name', 'ASC')->get();
         $offices = Office::all();
         $badges = Badge::all();
@@ -74,7 +76,7 @@ class VisitorController extends Controller
         $request->validate([
         'visitor_name' => 'required',
         'visitor_email' => 'required|email',
-        'visitor_id_number' => 'required|unique',
+        'visitor_id_number' => 'required|unique:visitors',
         'visitor_phone_number' => 'required',
         'department_id' => 'required',
         
@@ -97,7 +99,7 @@ class VisitorController extends Controller
 
         Visitor::create($data);
         $data = Badge::select('badge_number', 'id')
-        ->where('visitor_id', $request->id)
+        ->where('id', $request->badge_id)
          ->update([ 'badge_status' => 'assigned']);
 
         return redirect()->back();
@@ -106,13 +108,18 @@ class VisitorController extends Controller
     {
         $visitors = Visitor::with(['employee', 'badge'])->get();
         $date = Carbon::now()->tz('Africa/Nairobi');
+        $badges = Badge::all();
 
         
         DB::table('visitors')
         ->where(['id' => $id])
-         ->update(['time_out' => $date->toTimeString(), 'visitor_status' => 'Out', 'badge_status' => 'unassigned']);
+         ->update(['time_out' => $date->toDateTimeString(), 'visitor_status' => 'Out']);
+         foreach ($visitors as $visitor){
+            DB::table('badges')
+            ->where(['id' => $visitor->badge_id ])
+            ->update([ 'badge_status' => 'unassigned']);
 
-       
+         }  
 
          return redirect()->back();
 

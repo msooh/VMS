@@ -12,13 +12,13 @@
 					<div class="card radius-10 ">
 						<div class="card-body">
 						<div class="d-flex align-items-center">
-							<h5 class="mb-0 text-primary">23</h5>
+							<h5 class="mb-0 text-primary">{{$appointments}}</h5>
 							<div class="ms-auto">
 								<i class="bx bx-group fs-3 text-primary"></i>
 							</div>
 						</div>
 						<div class="progress my-2" style="height:4px;">
-							<div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							<div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 						<div class="d-flex align-items-center">
 							<p class="mb-0">Appointments</p>
@@ -30,13 +30,13 @@
 					<div class="card radius-10">
 					<div class="card-body">
 						<div class="d-flex align-items-center">
-							<h5 class="mb-0 text-success">155</h5>
+							<h5 class="mb-0 text-success">{{$checkin}}</h5>
 							<div class="ms-auto">
 								<i class="bx bx-group fs-3 text-success"></i>
 							</div>
 						</div>
 						<div class="progress my-2" style="height:4px;">
-							<div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 						<div class="d-flex align-items-center">
 							<p class="mb-0">Total Checkin</p>
@@ -48,13 +48,13 @@
 					<div class="card radius-10">
 					<div class="card-body">
 						<div class="d-flex align-items-center">
-							<h5 class="mb-0 text-danger">127</h5>
+							<h5 class="mb-0 text-danger">{{$checkout}}</h5>
 							<div class="ms-auto">
 								<i class="bx bx-group fs-3 text-danger"></i>
 							</div>
 						</div>
 						<div class="progress my-2" style="height:4px;">
-							<div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							<div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 						<div class="d-flex align-items-center">
 							<p class="mb-0">Total Checkout</p>
@@ -66,16 +66,16 @@
 					<div class="card radius-10">
 						<div class="card-body">
 						<div class="d-flex align-items-center">
-							<h5 class="mb-0 text-warning">50</h5>
+							<h5 class="mb-0 text-warning">{{$visitors}}</h5>
 							<div class="ms-auto">
 								<i class="bx bx-group fs-3 text-warning"></i>
 							</div>
 						</div>
 						<div class="progress my-2" style="height:4px;">
-							<div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							<div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 						<div class="d-flex align-items-center">
-							<p class="mb-0">Repeat Visitors</p>
+							<p class="mb-0">Total Visitors</p>
 						</div>
 					</div>
 					</div>
@@ -154,6 +154,11 @@
 		$(function() {
 			$(".knob").knob();
 		});
+	</script>
+	<script>
+		function changeWidth(){
+			progress.style.width = '${(finalvalue / max) * 100}';
+		}
 	</script>
 	<script src="assets/js/index.js"></script>
 @endpushOnce

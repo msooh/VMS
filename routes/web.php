@@ -8,6 +8,7 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +41,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('employees')->name('employees.')->group(function () {
         Route::get('index', [EmployeeController::class, 'index'])->name('index');

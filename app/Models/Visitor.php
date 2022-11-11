@@ -18,7 +18,7 @@ class Visitor extends Model
         'time_in',
         'time_out',
         'employee_id',
-        'office_id', 
+        'department_id', 
         'avatar',
         'badge_id',
         'visitor_status',
@@ -43,6 +43,10 @@ class Visitor extends Model
      */
     public function badge() {
         return $this->belongsTo(Badge::class);
+    }
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 }
 
