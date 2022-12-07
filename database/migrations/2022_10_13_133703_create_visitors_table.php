@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('visitor_phone_number');
             $table->date('visit_date');
             $table->time('time_in');
-            $table->dateTime('time_out')->nullable()->default('NULL');
+            $table->dateTime('time_out')->nullable();
             $table->foreignId('department_id')->constrained('departments')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('avatar',300)->nullable();

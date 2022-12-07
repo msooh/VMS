@@ -9,6 +9,7 @@ use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SelfcheckinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
+    return view('selfcheckin.index');
+});
+Route::get('login', function(){
     return view('auth.login');
 });
 Route::get('registration', function(){
@@ -90,4 +94,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
     
+});
+Route::get('getemployees', [SelfcheckinController::class, 'getemployees'])->name('getemployees');
+Route::prefix('/selfcheckin')->name('selfcheckin.')->group(function () {
+    Route::get('index', [SelfcheckinController::class, 'index'])->name('index');
+    Route::get('appointment', [SelfcheckinController::class, 'appointment'])->name('appointment');
+    Route::get('checkin', [SelfcheckinController::class, 'checkin'])->name('checkin');
+
 });
