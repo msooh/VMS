@@ -356,6 +356,9 @@ p {
     font-weight: 400;
     
 }
+.checkin li{
+    width: 33.3% !important;
+}
 
 /*Icons in the ProgressBar*/
 #progressbar #details:before {
@@ -381,6 +384,18 @@ p {
     content: "\f00c";
     text-align: center;
 }
+#progressbar #info:before {
+    font-family: FontAwesome;
+    content: "\f46c";
+    text-align: center;
+}
+#progressbar #feedback:before {
+    font-family: FontAwesome;
+    content: "\f086";
+    text-align: center;
+}
+
+
 
 /*Icon ProgressBar before any progress*/
 #progressbar li:before {
@@ -430,4 +445,24 @@ p {
 .fit-image{
     width: 100%;
     object-fit: cover;
+}
+
+/*Rating*/
+
+.checked {
+    color: orange;
+  }
+.fa-star{
+    font-size: 30px;
+    text-align: center;
+}
+
+/*Links*/
+
+.checkappointment{
+    color: #ffffff;
+    margin-top: 50px;
+    margin-right: 0;
+    float: left;
+    
 }

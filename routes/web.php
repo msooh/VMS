@@ -100,5 +100,8 @@ Route::prefix('/selfcheckin')->name('selfcheckin.')->group(function () {
     Route::get('index', [SelfcheckinController::class, 'index'])->name('index');
     Route::get('appointment', [SelfcheckinController::class, 'appointment'])->name('appointment');
     Route::get('checkin', [SelfcheckinController::class, 'checkin'])->name('checkin');
+    Route::get('checkout', [SelfcheckinController::class, 'checkout'])->name('checkout');
+    Route::get('return', [SelfcheckinController::class, 'return'])->name('return');
+    Route::get('searchappointment', [SelfcheckinController::class, 'searchappointment'])->name('searchappointment');
 
 });

@@ -10,8 +10,11 @@
         "haruncpi/laravel-id-generator": "^1.1",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
+        "laravel/scout": "^9.5",
         "laravel/tinker": "^2.7",
+        "livewire/livewire": "^2.10",
         "nesbot/carbon": "^2.62",
+        "simplesoftwareio/simple-qrcode": "^0.0.4@beta",
         "sirajcse/laravel-unique-id-generator": "^1.0"
     },
     "require-dev": {

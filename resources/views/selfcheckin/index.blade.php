@@ -6,9 +6,9 @@
         </div>
         <div class="homebuttons">
             <button type="button" class="btn btn-success"><span><a href="{{ route('selfcheckin.checkin') }}">Check In</a></span></button>
-            <button type="button" class="btn btn-success"><span><a href="{{ route('selfcheckin.appointment') }}">Check Out</a></span></button>
+            <button type="button" class="btn btn-success"><span><a href="{{ route('selfcheckin.checkout') }}">Check Out</a></span></button>
             <button type="button" class="btn btn-success"><span><a href="{{ route('selfcheckin.appointment') }}">Book Appointment</a></span></button>
-            <button type="button" class="btn btn-success"><span><a href="{{ route('selfcheckin.appointment') }}">Been Here Before</a></span></button>
+            <button type="button" class="btn btn-success"><span><a href="{{ route('selfcheckin.return') }}">Been Here Before</a></span></button>
         </div> 
     </div>
 </div>

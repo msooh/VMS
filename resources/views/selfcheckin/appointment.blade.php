@@ -28,7 +28,7 @@
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
                     
     
-                    <form id="msform">
+                    <form id="msform" class="needs-validation" action="{{ route('appointments.store') }}" method="post" enctype="multipart/form-data" novalidate>
                     @csrf
                         <!-- fieldsets -->
                         <fieldset>
@@ -46,16 +46,19 @@
                                 @if($errors->has('name'))
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
+                                <br>
                                 <label class="fieldlabels">Email: *</label>
                                 <input type="email" name="email" placeholder="Email Address" required/>
                                 @if($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
+                                <br>
                                 <label class="fieldlabels">ID/Passport: *</label>
                                 <input type="password" name="id_number" placeholder="ID/Passport" required>
                                 @if($errors->has('id_number'))
                                     <span class="text-danger">{{ $errors->first('id_number') }}</span>
                                 @endif
+                                <br>
                                 <label class="fieldlabels">Phone Number: *</label>
                                 <input type="tel" id="phoneno" name="phone_number" placeholder="Phone Number" required/>
                                 <span id="valid-msg" class="hide"></span>
@@ -111,10 +114,17 @@
                                 </div>
                                 <label class="fieldlabels">Select Date:</label>
                                 <input id="date" type="date" min="2010-04-01" max="2040-04-30" name="appointment_date">
+                                @if($errors->has('appointment_date'))
+                                    <span class="text-danger">{{ $errors->first('appointment_date') }}</span>
+                                @endif
+                                <br>
                                 <label class="fieldlabels">Select Time:</label>
                                 <input id="time" type="time" min="08:00" max="17:00" name="expected_time">
+                                @if($errors->has('expected_time'))
+                                    <span class="text-danger">{{ $errors->first('expected_time') }}</span>
+                                @endif
                             </div>
-                            <input type="button" name="next" class="next action-button" value="Submit"/>
+                            <input type="submit" name="next" class="next action-button submit-btn" value="Submit"/>
                             <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
                         </fieldset>
                         <fieldset>
@@ -132,7 +142,8 @@
                                 <h2 class="text-center"id="success"></h2>
                                 <br>
                                 <div class="row justify-content-center">
-                                    
+                                <h5 class="text-center">Appointment number</h5>
+                                    <img src="https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0" class="qr-code img-thumbnail img-responsive" />
                                 </div>
                                 <br><br>
                                 <div class="row justify-content-center">
@@ -148,33 +159,4 @@
             </div>
         </div>
     </div>
-    @endsection
-    @pushOnce('scripts')
-    <script type="text/javascript">
- $(document).ready(function() {
-	$(document).on('change', '.departmentname', function(){
-		$('#employee').empty().append('<option value="null">-Select Host-</option>');
-		var department_id=$(this).val();
-	 	var div = $(this).parent();
-	 	
-			$.ajax({
-					type:'get',
-					url:'{!!URL::to('getemployees')!!}',
-					data: {'id':department_id},
-					success:function(data){
-						
-						for (var i = 0; i <= data.length-1; i++) { 
-                		$('#employee').append('<option value="' + data[i].id + '">' + data[i].name + '</option>'); 
-            }
-						
-					},
-					error:function(){
-
-					}
-			});
-	});	 
-       
-    });
-</script>
-    
-    @endpushOnce
+@endsection 

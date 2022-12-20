@@ -41,4 +41,28 @@ class SelfcheckinController extends Controller
         return view('selfcheckin.checkin', compact('appointments'));
 
     }
+
+    public function checkout()
+    {
+        $badges = DB::table('badges')->get();
+
+        return view('selfcheckin.checkout', compact('badges'));
+
+    }
+
+    public function return()
+    {
+        $visitors = DB::table('visitors')->orderBy('visitor_name', 'ASC')->get();
+
+        return view('selfcheckin.return_visitor', compact('visitors'));
+
+    }
+    public function searchappointment(Request $request)
+    {
+        $data = Appointment::where('app_no', 'LIKE', '%'. $request->get('query'). '%')
+                    ->get();
+     
+        return response()->json($data);
+    }
+
 }

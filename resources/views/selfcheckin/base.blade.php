@@ -53,8 +53,10 @@
 
     <!--plugins-->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
     
 	<script src="{{ asset('assets/plugins/mdb5-standard/js/mdb.min.js') }}"></script>
+   
     <script src="{{ asset('assets/plugins/intl-tel-input/js/intlTelInput.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/intl-tel-input/js/utils.js') }}"></script>
     @stack('scripts')
