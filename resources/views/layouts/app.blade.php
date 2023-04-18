@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
     <!--favicon-->
@@ -15,6 +16,7 @@
     <link href="{{ asset('assets/plugins/intl-tel-input/css/intlTelInput.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatable/dataTables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datetimepicker/css/classic.date.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css') }}" rel="stylesheet" />
@@ -57,6 +59,11 @@
     <!--plugins-->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/pdfmake.min.js.map') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/intl-tel-input/js/intlTelInput.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>

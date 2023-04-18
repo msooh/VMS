@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('badge_number');
             $table->enum('badge_status', ['assigned', 'unassigned']);
+            $table->foreignId('court_id')->constrained('courts')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

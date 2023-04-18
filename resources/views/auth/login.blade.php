@@ -42,9 +42,9 @@
                  @csrf
                 <div class="form-field d-flex align-items-center">
                     <span class="fa fa-user"></span>
-					<input type="email" class="form-control" id="inputEmailAddress" name="email" placeholder="Email">
-                    @if($errors->has('email'))
-                        <span class="text-danger">{{ $errors->first('email')}}</span>
+					<input type="text" class="form-control" id="inputUserName" name="alias" placeholder="User Name">
+                    @if($errors->has('alias'))
+                        <span class="text-danger">{{ $errors->first('alias')}}</span>
                     @endif
                 </div>
                 <div class="form-field d-flex align-items-center">

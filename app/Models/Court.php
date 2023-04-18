@@ -32,8 +32,8 @@ class Court extends Model
         return $this->hasMany(Employee::class);
     }
     
-    public function visitors()
+    public function visits()
     {
-        return $this->hasMany(Visitor::class);
+        return $this->hasMany(Visit::class);
     }
 }

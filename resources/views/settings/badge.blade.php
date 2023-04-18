@@ -38,7 +38,15 @@
 								<input type="text" class="form-control" id="validationCustom01" name="badge_status">
 							</div>
 							</div>
-							
+							<div class="col-md-12">
+									<label for="validationCustom04" class="form-label">Court</label>
+									<select class="form-select" id="validationCustom04" name="court_id" required>
+										<option selected disabled value="">Choose Court...</option>
+										@foreach($courts as $court )
+											<option value="{{ $court->id }}">{{ $court->court_name }}</option>
+										@endforeach
+									</select>
+								</div>
 						
 							<div class="col-6" style="padding-top: 30px;">
 								<button class="btn btn-primary success" type="submit">Save</button>
@@ -52,6 +60,7 @@
 								<tr>
 									<th>Badge Number</th>
 									<th>Badge Status</th>
+									<th>Court</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -60,6 +69,7 @@
 								<tr>
 									<td>{{ $badge->badge_number }}</td>
 									<td>{{ $badge->badge_status }}</td>
+									<td>{{ $badge->court->court_name}}</td>
 									<td>
 										<div class="dropdown">
 											<div class="cursor-pointer font-24 dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i>

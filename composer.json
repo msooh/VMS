@@ -14,7 +14,6 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "nesbot/carbon": "^2.62",
-        "simplesoftwareio/simple-qrcode": "^0.0.4@beta",
         "sirajcse/laravel-unique-id-generator": "^1.0"
     },
     "require-dev": {

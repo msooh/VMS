@@ -13,37 +13,17 @@ class Visitor extends Model
         'visitor_name',
         'visitor_email',
         'visitor_id_number',
-        'visitor_phone_number',
-        'visit_date',
-        'time_in',
-        'time_out',
-        'employee_id',
-        'department_id', 
+        'visitor_phone_number', 
         'avatar',
-        'badge_id',
-        'visitor_status',
         'created_by',
         'updated_by'
     ];
 
-     /**
-     * Get the employee for the visitor.
-     */
-    public function employee() {
-        return $this->belongsTo(Employee::class);
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
     }
-     /**
-     * Get the office for the visitor.
-     */
-    public function office() {
-        return $this->belongsTo(Office::class);
-    }
-      /**
-     * Get the badge for the visitor.
-     */
-    public function badge() {
-        return $this->belongsTo(Badge::class);
-    }
+
     public function appointments()
     {
         return $this->hasMany(Appointment::class);

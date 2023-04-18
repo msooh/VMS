@@ -10,7 +10,7 @@ class Employee extends Model
     use HasFactory;
     protected $fillable = [
         'name', 'email',
-        'phno', 'est_number',
+        'extension', 'est_number',
         'office_id', 'role_id',
          'created_by', 'updated_by',
     ];
@@ -41,8 +41,8 @@ class Employee extends Model
         return $this->belongsTo(Role::class);
     }
 
-    public function visitors()
+    public function visits()
     {
-        return $this->hasMany(Visitor::class);
+        return $this->hasMany(Visit::class);
     }
 }

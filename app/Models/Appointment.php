@@ -11,11 +11,8 @@ class Appointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'app_no',
-        'email',
-        'id_number',
-        'phone_number',
+        'visitor_id',
         'appointment_date',
         'expected_time',
         'employee_id',
@@ -37,6 +34,9 @@ class Appointment extends Model
     public function department() {
         return $this->belongsTo(Department::class);
     }
+     /**
+     * Appointment belongs to a visitor.
+     */
     public function visitor() {
         return $this->belongsTo(Visitor::class);
     }

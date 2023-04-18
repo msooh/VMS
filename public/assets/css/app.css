@@ -1496,6 +1496,11 @@ a {
 
 /*Report Page*/
 
+#table-report {
+	padding: 15px;
+	box-shadow: 1px 3px;
+}
+
 
 #report {
 

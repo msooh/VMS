@@ -46,7 +46,8 @@ class SettingController extends Controller
     public function indexBadge()
     {
         $badges = Badge::all();
-        return view('settings.badge', compact('badges'));
+        $courts = Court::all();
+        return view('settings.badge', compact('badges', 'courts'));
     }
 
     public function storeCourt(Request $request)

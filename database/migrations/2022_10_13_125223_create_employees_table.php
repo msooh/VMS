@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phno')->unique();
+            $table->string('extension');
             $table->string('est_number')->unique();
             $table->foreignId('office_id')->constrained('offices')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('role_id')->constrained('roles')->onUpdate('cascade')->onDelete('cascade');

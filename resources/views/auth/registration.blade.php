@@ -49,6 +49,13 @@
                             </div>
                             <div class="form-field d-flex align-items-center">
                                 <span class="fa fa-user"></span>
+                                <input type="text" class="form-control" name="alias" id="alias" placeholder="User Name">
+                                @if($errors->has('alias'))
+                                <span class="text-danger">{{ $errors->first('alias')}}</span>
+                                @endif
+                            </div>
+                            <div class="form-field d-flex align-items-center">
+                                <span class="fa fa-user"></span>
                                 <input type="text" name="email" class="form-control" placeholder="Email">
                                 @if($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email')}}</span>

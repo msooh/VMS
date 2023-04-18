@@ -10,6 +10,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SelfcheckinController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,17 +79,36 @@ Route::middleware('auth')->group(function () {
         Route::get('create', [VisitorController::class, 'create'])->name('create');    
         Route::post('store', [VisitorController::class, 'store'])->name('store');
         Route::post('checkout/{id}', [VisitorController::class, 'checkout'])->name('checkout');
+        Route::post('show/{id}', [VisitorController::class, 'show'])->name('show');
+        Route::get('notify', [VisitorController::class, 'notify'])->name('notify');
 
     });
     Route::get('getoffices', [VisitorController::class, 'getoffices'])->name('getoffices');
     Route::get('getemployees', [VisitorController::class, 'getemployees'])->name('getemployees');
+    Route::get('get-staff/{department}', [AppointmentController::class, 'getStaffByDepartment']);
+    Route::put('/appointments/{id}', [AppointmentController::class, 'date'])->name('appointments.date');
+    Route::get('/employees/{department}', [VisitorController::class, 'getEmployeesByDepartment'])->name('employees.get-by-department');
+
 
     Route::prefix('appointments')->name('appointments.')->group(function () {
         Route::get('index', [AppointmentController::class, 'index'])->name('index');
+        Route::put('index/{id}', [AppointmentController::class, 'date'])->name('appointments.date');
         Route::get('create', [AppointmentController::class, 'create'])->name('create');    
         Route::post('store', [AppointmentController::class, 'store'])->name('store');
+        Route::put('update/{appointment}', [AppointmentController::class, 'update'])->name('update');
         Route::post('approve/{id}', [AppointmentController::class, 'approve'])->name('approve');
         Route::post('reject/{id}', [AppointmentController::class, 'reject'])->name('reject');
+        Route::get('show', [AppointmentController::class, 'show'])->name('show');
+        Route::get('edit/{appointment}', [AppointmentController::class, 'edit'])->name('edit');
+        Route::post('checkin/{id}', [AppointmentController::class, 'checkin'])->name('checkin');
+
+    });
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('visitors', [ReportController::class, 'visitors'])->name('visitors');
+        Route::get('appointments', [ReportController::class, 'create'])->name('appointments');    
+        Route::get('staff', [ReportController::class, 'staff'])->name('staff');
+        Route::get('offices', [ReportController::class, 'offices'])->name('offices');
+        Route::get('badges', [ReportController::class, 'badges'])->name('badges');
 
     });
 
@@ -96,7 +116,7 @@ Route::middleware('auth')->group(function () {
     
 });
 Route::get('getemployees', [SelfcheckinController::class, 'getemployees'])->name('getemployees');
-Route::prefix('/selfcheckin')->name('selfcheckin.')->group(function () {
+Route::prefix('selfcheckin')->name('selfcheckin.')->group(function () {
     Route::get('index', [SelfcheckinController::class, 'index'])->name('index');
     Route::get('appointment', [SelfcheckinController::class, 'appointment'])->name('appointment');
     Route::get('checkin', [SelfcheckinController::class, 'checkin'])->name('checkin');

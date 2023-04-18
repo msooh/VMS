@@ -31,6 +31,7 @@ class SessionController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'alias' => 'required',
             'email' => 'required|email|unique:users',
             'role' => 'required',
             'password' => 'required|min:6'
@@ -40,6 +41,7 @@ class SessionController extends Controller
 
         User::create([
             'name' => $data['name'],
+            'alias' => $data['alias'],
             'email' => $data['email'],
             'role' => $data['role'],
             'password' => Hash::make($data['password'])

@@ -59,8 +59,147 @@ $(function () {
 			$('#menu').metisMenu().show()
 		});
 		});
+	//Reports DataTables
+	$(document).ready(function() {
+		// Create date inputs
+	   
+		var table = $('#report').DataTable( {
+			lengthChange: false,
+			dom: 'Blfrtip',
+			buttons: [ 'copy', 'csv', 'excel', 'pdf', 'print', 'colvis']
+		} );
+	 
+		table.buttons().container()
+			.appendTo( '#example_wrapper .col-md-6:eq(0)' );
+			// Refilter the table
+  
+	} );
+	
+	//Visitors Reports Filter
+	$(document).ready(function() {
+		$("#applyFilter").click(function() {
+		  var startDate = new Date($("#start-date").val());
+		  var endDate = new Date($("#end-date").val());
+		  var office = $("#office").val().toLowerCase();
+		  var host = $("#host").val().toLowerCase();
+	  
+		  $("table tbody tr").filter(function() {
+			var rowDate = new Date($(this).find("td:nth-child(7)").text().trim());
+			var rowOffice = $(this).find("td:nth-child(5)").text().toLowerCase();
+			var rowHost = $(this).find("td:nth-child(4)").text().toLowerCase();
+	  
+			var dateMatch = (isNaN(startDate) || isNaN(endDate) || (rowDate >= startDate && rowDate <= endDate));
+			var officeMatch = (office === "" || rowOffice === office);
+			var hostMatch = (host === "" || rowHost === host);
+	  
+			return !(dateMatch && officeMatch && hostMatch);
+		  }).hide();
+	  
+		});
+		$("#resetFilter").on("click", function() { // listen for clicks on the reset filter button
+			$("#start-date").val(""); // reset the start date filter select to its default value
+			$("#end-date").val(""); // reset the end date filter select to its default value
+			$("#office").val(""); // reset the department filter select to its default value
+			$("#host").val(""); // reset the host filter select to its default value
+			$("table tbody tr").show(); // show all rows
+	  });
+	  });
+	//Dynamic Dropdown
+	$(document).ready(function() {
+		$('#department_id').change(function() {
+			var departmentId = $(this).val();
+			if (departmentId) {
+				$.ajax({
+					url: '/staff-members/' + departmentId,
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						$('#staff_member_id').empty();
+						$('#staff_member_id').append($('<option>').text('Select Staff Member').attr('value', ''));
+						$.each(data, function(key, value) {
+							$('#staff_member_id').append($('<option>').text(value.name).attr('value', value.id));
+						});
+					}
+				});
+			}
+		});
+	});
+	//Appointments Table Edit appointment date
+	$(document).ready(function() {
+		// Initialize DataTable
+		var appointmentsTable = $('#appointmentTable').DataTable();
+	
+		// Handle click on appointment date cell
+		$('#appointmentTable tbody').on('click', 'td.editable', function() {
+		  var cell = $(this);
+		  var appointmentId = cell.data('id');
+		  var appointment_date = cell.data('field');
+		  var currentValue = cell.text();
+		  var token = $('meta[name="csrf-token"]').attr('content');
+	
+		  // Replace cell content with input field
+		  cell.html('<input type="date" id="date" class="form-control" name="' + appointment_date + '" value="' + currentValue + '">');
+	
+		  // Focus on input field
+		  cell.find('input').focus();
 		
 	
+		  // Handle blur on input field
+		  cell.find('input').on('blur', function() {
+			var newValue = $(this).val();
+	
+			// Update cell content with new value
+			cell.text(newValue);
+	
+			// Send AJAX request to update appointment date in database
+			$.ajax({
+			  url: '/appointments/' + appointmentId,
+			  method: 'PUT',
+			  data: {
+				field: appointment_date,
+				value: newValue,
+				_token: token
+			  },
+			  success: function(response) {
+				// Show success message
+				alert(response);
+			  },
+			  error: function(jqXHR, textStatus, errorThrown) {
+				// Show error message
+				alert('Error: ' + errorThrown);
+			  }
+			});
+		  });
+		});
+	  });
+	  $(document).ready(function () {
+		$('.appointment-date').on('blur', function () {
+		  var appointmentId = $(this).data('appointment-id');
+		  var newDateValue = $(this).text();
+		  var token = $('meta[name="csrf-token"]').attr('content');
+	  
+		  $.ajax({
+			url: '/appointments/' + appointmentId,
+			type: 'PUT',
+			data: {
+			  field: 'appointment_date',
+			  value: newDateValue,
+			  _token: token
+			},
+			success: function (response) {
+			  console.log(response);
+			},
+			error: function (xhr) {
+			  console.log(xhr.responseText);
+			}
+		  });
+		});
+	  });
+	  
+//GET EMPLOYEES BY DEPARTMENT
+
+
+
 	// chat toggle
 	$(".chat-toggle-btn").on("click", function () {
 		$(".chat-wrapper").toggleClass("chat-toggled");
@@ -133,13 +272,6 @@ $(function () {
 		$("html").addClass("color-header headercolor8");
 		$("html").removeClass("headercolor1 headercolor2 headercolor4 headercolor5 headercolor6 headercolor7 headercolor3");
 	});
-
-
-
-
-
-
-
 
 
 });

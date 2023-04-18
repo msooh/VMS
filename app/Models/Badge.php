@@ -10,15 +10,15 @@ class Badge extends Model
     use HasFactory;
 
     protected $fillable = [
-        'badge_number', 'badge_status',
+        'badge_number', 'badge_status', 'court_id'
     ];
 
     public function court() {
         return $this->belongsTo(Court::class);
     }
 
-    public function visitors()
+    public function visits()
     {
-        return $this->hasMany(Visitor::class);
+        return $this->hasMany(Visit::class);
     }
 }

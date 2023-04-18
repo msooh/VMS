@@ -95,7 +95,7 @@
                     <div class="menu-title">Reports</div>
                 </a>
                 <ul>
-                    <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Visitor Reports</a>
+                    <li> <a href="{{ route('reports.visitors') }}"><i class="bx bx-right-arrow-alt"></i>Visitor Reports</a>
                     </li>
                     <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Appointment Reports</a>
                     </li>

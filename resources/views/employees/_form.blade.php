@@ -53,9 +53,9 @@
 									<div class="invalid-feedback">Please provide a valid Est Number.</div>
 								</div>
 								<div class="col-md-6">
-									<label for="validationCustom03" class="form-label">Phone Number</label>
-									<input type="text" class="form-control" id="validationCustom03" name="phno" required>
-									<div class="invalid-feedback">Please provide a valid Mobile.</div>
+									<label for="validationCustom03" class="form-label">Extension</label>
+									<input type="text" class="form-control" id="validationCustom03" name="extension" required>
+									<div class="invalid-feedback">Please provide a valid Extension Number.</div>
 								</div>
 								<div class="col-md-6">
 									<label for="validationCustom04" class="form-label">Email</label>

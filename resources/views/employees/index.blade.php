@@ -32,7 +32,7 @@
 								<tr>
 									<th>Name</th>
 									<th>Est Number</th>
-									<th>Phone Number</th>
+									<th>Extension Number</th>
 									<th>Email</th>
 									<th>Office</th>
 									<th>Department</th>
@@ -46,7 +46,7 @@
 									<!--<td><img src="{{ asset($employee->avatar) }}" width="50" height="50" class="rounded-circle" alt="" onerror="this.src='{{ asset('assets/images/sites/beaverton.jpg') }}'"/></td>-->
 									<td>{{ $employee->name }}</td>
 									<td>{{ $employee->est_number }}</td>
-									<td>{{ $employee->phno }}</td>
+									<td>{{ $employee->extension }}</td>
 									<td>{{ $employee->email }}</td>
 									<td>{{ $employee->office->office_name }}</td>
 									@foreach($departments as $department)

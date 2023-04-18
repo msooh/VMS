@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
+use App\Notifications\Newvisitor;
 
+use App\Models\Visit;
 use App\Models\Visitor;
-
 use App\Models\Employee;
 use App\Models\Office;
 use App\Models\Court;
 use App\Models\Appointment;
-
 use App\Models\Badge;
+use App\Models\User;
 
 use DataTables;
 use Illuminate\Support\Carbon;
@@ -34,14 +39,15 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        $visitors = Visitor::with(['employee', 'badge'])->get();
+        $visits = Visit::with(['visitor', 'employee', 'badge'])->get();
         $employees = Employee::all();
         $appointments = Appointment::all();
         $departments = DB::table('departments')->orderBy('department_name', 'ASC')->get();
         $offices = Office::all();
         $badges = Badge::all();
+        $visitReasons = ['Meeting', 'Event', 'Consultation', 'Delivery', 'Other'];
     
-        return view('visitors.index', compact('visitors', 'employees', 'departments', 'offices', 'badges'));
+        return view('visitors.index', compact('visits', 'employees', 'departments', 'offices', 'badges', 'visitReasons'));
     }
 
     public function getoffices(Request $request) {
@@ -56,6 +62,17 @@ class VisitorController extends Controller
         return response()->json($data);
        
     }
+    
+    public function getEmployeesByDepartment(Request $request)
+{
+    $departmentId = $request->get('department_id');
+    $employees = Employee::whereHas('office', function($query) use ($departmentId) {
+        $query->where('department_id', $departmentId);
+    })->get();
+    return response()->json($employees);
+}
+
+
 
 
     /**
@@ -71,55 +88,100 @@ class VisitorController extends Controller
      * @param  \App\Http\Requests\Auth\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+        // Create a new visitor record
+        
     public function store(Request $request)
     {
-        $request->validate([
-        'visitor_name' => 'required',
-        'visitor_email' => 'required|email',
-        'visitor_id_number' => 'required|unique:visitors',
-        'visitor_phone_number' => 'required',
-        'department_id' => 'required',
-        
-    ]);
- 
-        $data = $request->all();
-        $data['created_by'] = auth()->user()->id;
-        $data['updated_by'] = auth()->user()->id;
-        $data['visit_date'] = Carbon::today()->toDateString();
-        $data['time_in'] = Carbon::now()->tz('Africa/Nairobi')->toTimeString();
+        $validatedData = $request->validate([
+            'visitor_name' => 'required|string',
+            'visitor_email' => 'required|email|unique:visitors',
+            'visitor_id_number' => 'required|unique:visitors',
+            'visitor_phone_number' => 'required|string',
+            'department_id' => 'required',
+           
+        ]);
 
-        
-        
-        if($request->file('avatar')):
-            $fileName = time().$request->file('avatar')->getClientOriginalName();
-            $path = $request->file('avatar')->storeAs('avatars', $fileName, 'public');
-            $data['avatar'] = '/storage/'.$path;
-        endif;
+    
+        $visitor = Visitor::create([
+            'visitor_name' => $validatedData['visitor_name'],
+            'visitor_email' => $validatedData['visitor_email'],
+            'visitor_id_number' => $validatedData['visitor_id_number'],
+            'visitor_phone_number' => $validatedData['visitor_phone_number'],
+            'created_by' => auth()->user()->id,
+            'updated_by' => auth()->user()->id,
+        ]);
+       
+        $id = UniqueIdGenerator::generate(['table' => 'visits', 'field'=>'visit_no', 'length' => 14, 'prefix' =>'VST-', 'suffix' =>date('ymd')]);
+        $visitReasons = ['Official', 'Non-official'];
+        $visit = Visit::create([
+            'visitor_id' => $visitor->id,
+            'department_id' => $request->department_id,
+            'employee_id' => $request->employee_id,
+            'badge_id' => $request->badge_id,
+            'visit_reason' => $request->visit_reason,
+            'visit_date' => Carbon::now()->tz('Africa/Nairobi')->toDateTimeString(),
+            'created_by' => auth()->user()->id,
+            'updated_by' => auth()->user()->id,
+            'visit_no' => $id,
+        ]);
+
     
 
-        Visitor::create($data);
-        $data = Badge::select('badge_number', 'id')
+        $visit = Badge::select('badge_number', 'id')
         ->where('id', $request->badge_id)
          ->update([ 'badge_status' => 'assigned']);
 
-        return redirect()->back();
+        
+
+        return redirect()->back()->with('success', 'Visitor checked in successfully.')->with(compact('visitReasons'));
+    }
+
+    public function notify()
+    {
+        $user = User::first();
+   
+        $details = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'You have a visitor.',
+            'actionURL' => 'Click for more info',
+            'thanks' => 'Thank you',
+        ];
+  
+        Notification::send($user, new NewVisitor($details));
+   
+        dd('Notification sent!');
+
     }
     public function checkout(int $id)
     {
-        $visitors = Visitor::with(['employee', 'badge'])->get();
+        $visits = Visit::with(['employee', 'badge'])->get();
         $date = Carbon::now()->tz('Africa/Nairobi');
         $badges = Badge::all();
 
         
-        DB::table('visitors')
+        DB::table('visits')
         ->where(['id' => $id])
          ->update(['time_out' => $date->toDateTimeString(), 'visitor_status' => 'Out']);
-         foreach ($visitors as $visitor){
+         foreach ($visits as $visit){
             DB::table('badges')
-            ->where(['id' => $visitor->badge_id ])
+            ->where(['id' => $visit->badge_id ])
             ->update([ 'badge_status' => 'unassigned']);
 
          }  
+
+         return redirect()->back();
+
+    }
+    public function show(int $id)
+    {
+        $visits = Visitor::with(['visitor', 'employee', 'badge'])->get();
+        $employees = Employee::all();
+        $appointments = Appointment::all();
+        $departments = Department::all();
+        $offices = Office::all();
+        $badges = Badge::all();
+
 
          return redirect()->back();
 
@@ -129,49 +191,3 @@ class VisitorController extends Controller
 
     }
 
-    /*
-    function fetch_all(Request $request)
-    {
-        if($request->ajax())
-        {
-            $query = Visitor::join('users', 'user.id', '=', 'visitors.visitor_entry_by');
-
-            if(Auth::user()->type == 'User')
-            {
-                $query->where('visitors.visitor_entry_by', '=', Auth::user()->id);
-            }
-
-            $data = $query->query->get(['visitors.visitor_fname', 'visitor_lname', 'visitor_email', 'visitor_id_number', 'visitor_country_code',  'visitor_phone_number', 'visit_date', 'time_in', 'time_out', 'visitor_status', 'users.name', 'visitors.id']);
-
-            return DataTables::of($data)
-            ->addIndexColumn()
-            ->editColumn('visitor_status', function($row){
-                if($row->visitor_status == 'In')
-                {
-                    return '<span class="badge bg-success">In</span>' ;
-                }
-                else
-                {
-                    return '<span class="badge bg-danger">Out</span>';
-
-                }
-            })
-            ->escapeColumns('visitor_status')
-            ->addcolumn('action', function($row){
-                if($row->visitor_status == 'In')
-                {
-                    return '<a href="/visitor/view/' .$row->id. '" class="btn btn-info btn-sm">View</a>&nbsp;<a href="/visitor/edit/'.$row->id. '" class="btn btn-primary btn-sm">CheckIn</a>&nbsp;
-                    <button type="button" class="btn btn-danger btn-sm delete" data-id="' .$row->id. '">Delete</button>
-                    ';
-                }
-                else
-                {
-                    return '<a href="/visitor/view/' .$row->id. '" class="btn btn-info btn-sm">View</a>&nbsp;
-                    <button type="button" class="btn btn-danger btn-sm delete" data-id="' .$row->id. '">Delete</button>
-                    ';
-                }
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-        }
-    }*/
